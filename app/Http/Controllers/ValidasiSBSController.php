@@ -31,13 +31,22 @@ class ValidasiSBSController extends Controller
             $bulanNow = $selectedMonth;
             $tahunNow = $selectedYear;
         } else {
-            // Mendapatkan tanggal saat ini
-            $today = Carbon::now();
-            // Mengurangkan satu bulan dari tanggal saat ini
-            $bulanTahun = $today->subMonth();
-            // Bulan sekarang
-            $bulanNow = date('m') == 1 ? 12 : date('m') - 1;
-            $tahunNow = date('m') == 1 ? date('Y') - 1 : date('Y');
+            $tanggalNow = date('d');
+            if ($tanggalNow <= 19) {
+                // Mendapatkan tanggal saat ini
+                $today = Carbon::now();
+                // Mengurangkan satu bulan dari tanggal saat ini
+                $bulanTahun = $today->subMonth();
+                // Bulan sekarang
+                $bulanNow = date('m') == 1 ? 12 : date('m') - 1;
+                $tahunNow = date('m') == 1 ? date('Y') - 1 : date('Y');
+            } elseif ($tanggalNow >= 20) {
+                // Mendapatkan tanggal saat ini
+                $bulanTahun = Carbon::now();
+                // Bulan sekarang
+                $bulanNow = date('m');
+                $tahunNow = date('Y');
+            }
         }
         return view('sbs.validasi.bps.index', [
             'title' => 'Dashboard SBS ' . Carbon::parse($bulanTahun)->isoFormat('MMMM YYYY', 'id'),
@@ -145,6 +154,7 @@ class ValidasiSBSController extends Controller
      */
     public function show(EntrySBS $bp)
     {
+        dd($bp);
         $this->authorize('bps');
 
         $entrySBS = EntrySBS::where('id', $bp->id)->first();

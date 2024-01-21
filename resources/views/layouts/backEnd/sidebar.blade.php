@@ -30,7 +30,7 @@
 
                 @can('pcl')
                     <li class="nav-item">
-                        <a href="/entry" class="nav-link {{ Request::is('entry*') ? 'active' : '' }}">
+                        <a href="{{ url('/entry') }}" class="nav-link {{ Request::is('entry*') ? 'active' : '' }}">
                             <i class="nav-icon fas fa-tachometer-alt"></i>
                             <p>
                                 Entry
@@ -41,7 +41,8 @@
                 {{-- Akses Untuk Admin dinas --}}
                 @can('dinas')
                     <li class="nav-item">
-                        <a href="/validasi/dinas" class="nav-link {{ Request::is('validasi*') ? 'active' : '' }}">
+                        <a href="{{ url('/validasi/dinas') }}"
+                            class="nav-link {{ Request::is('validasi*') ? 'active' : '' }}">
                             <i class="nav-icon fas fa-tachometer-alt"></i>
                             <p>
                                 validasi
@@ -49,7 +50,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="/users" class="nav-link {{ Request::is('users*') ? 'active' : '' }}">
+                        <a href="{{ url('/users') }}" class="nav-link {{ Request::is('users*') ? 'active' : '' }}">
                             <i class="nav-icon fas fa-users"></i>
                             <p>
                                 users
@@ -59,24 +60,34 @@
                 @endcan
                 @can('bps')
                     <li class="nav-item">
-                        <a href="/validasi/bps" class="nav-link {{ Request::is('validasi*') ? 'active' : '' }}">
+                        <a href="{{ url('/validasi/bps') }}"
+                            class="nav-link {{ Request::is('validasi*') ? 'active' : '' }}">
                             <i class="nav-icon fas fa-tachometer-alt"></i>
                             <p>
                                 Validasi
                             </p>
                         </a>
                     </li>
-                    {{-- <li class="nav-item">
-                        <a href="/users" class="nav-link {{ Request::is('users*') ? 'active' : '' }}">
+                    <li class="nav-item">
+                        <a href="{{ url('/users') }}" class="nav-link {{ Request::is('users*') ? 'active' : '' }}">
                             <i class="nav-icon fas fa-users"></i>
                             <p>
                                 users
                             </p>
                         </a>
-                    </li> --}}
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ url('/admin/entrysbs') }}"
+                            class="nav-link {{ Request::is('admin*') ? 'active' : '' }}">
+                            <i class="nav-icon fas fa-git"></i>
+                            <p>
+                                Admin
+                            </p>
+                        </a>
+                    </li>
                 @endcan
                 <li class="nav-item">
-                    <a href="/profile" class="nav-link {{ Request::is('profile*') ? 'active' : '' }}">
+                    <a href="{{ url('/profile') }}" class="nav-link {{ Request::is('profile*') ? 'active' : '' }}">
                         <i class="nav-icon fas fa-user"></i>
                         <p>
                             Profile
@@ -88,7 +99,7 @@
 
 
                 <li class="nav-item">
-                    <a href="/logout" class="nav-link ">
+                    <a href="{{ url('/logout') }}" class="nav-link ">
                         <i class="nav-icon fas fa-sign-out-alt"></i>
                         <p>
                             Logout

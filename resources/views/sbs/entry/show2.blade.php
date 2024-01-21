@@ -10,7 +10,7 @@
                     </i> </button> --}}
             </div>
             <div class="card-body">
-                <form method="post" action="/entry">
+                <form method="post" action="{{ url('/entry') }}">
                     @csrf
                     <div class="modal-body">
                         <input type="hidden" name="tanaman_id" value="{{ $tanaman->id }}">
@@ -19,7 +19,9 @@
                         <input type="hidden" name="r6" value="{{ $sbsNow->r6 }}">
                         <input type="hidden" name="min_harga" value="{{ $tanaman->min_harga }}">
                         <input type="hidden" name="max_harga" value="{{ $tanaman->max_harga }}">
-                        <p class="text-center text-bold my-3">Produksi (Kuintal)</p>
+                        @if ($sbsNow->r5 != null && $sbsNow->r6 != null)
+                            <p class="text-center text-bold my-3">Produksi (Kuintal)</p>
+                        @endif
                         <div class="row">
                             @if ($tanaman->belum_habis == 1)
                                 @if ($sbsNow->r5 != null)
@@ -76,21 +78,22 @@
 
                         </div>
                         <hr>
-
-                        <div class="form-group">
-                            <label for="r12">R12: Harga Jual Petani Per Kilogram (Rupiah)</label>
-                            <input type="number" class="form-control @error('r12') is-invalid  @enderror" id="r12"
-                                name="r12"
-                                @if ($sbsNow->r12 != null) value="{{ old('r12', $sbsNow->r12) }}" @else  value="{{ old('r12', 0.0) }}" @endif
-                                min="{{ $tanaman->min_harga }}" max="{{ $tanaman->max_harga }}">
-                            @error('r12')
-                                <div class="invalid-feedback">
-                                    {{ $message }}
-                                </div>
-                            @enderror
-                            <p class="text-info">Note: Harga Jual Harus diantara {{ $tanaman->min_harga }} dan
-                                {{ $tanaman->max_harga }} (Rupiah)</p>
-                        </div>
+                        @if ($sbsNow->r5 != null || $sbsNow->r6 != null)
+                            <div class="form-group">
+                                <label for="r12">R12: Harga Jual Petani Per Kilogram (Rupiah)</label>
+                                <input type="number" class="form-control @error('r12') is-invalid  @enderror"
+                                    id="r12" name="r12"
+                                    @if ($sbsNow->r12 != null) value="{{ old('r12', $sbsNow->r12) }}" @else  value="{{ old('r12', 0.0) }}" @endif
+                                    min="{{ $tanaman->min_harga }}" max="{{ $tanaman->max_harga }}">
+                                @error('r12')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
+                                <p class="text-info">Note: Harga Jual Harus diantara {{ $tanaman->min_harga }} dan
+                                    {{ $tanaman->max_harga }} (Rupiah)</p>
+                            </div>
+                        @endif
                         <div class="form-group">
                             <label for="note">r13: Keterangan</label>
                             <input type="text" class="form-control @error('note') is-invalid  @enderror" id="note"
@@ -100,12 +103,11 @@
                                     {{ $message }}
                                 </div>
                             @enderror
-
                         </div>
                     </div>
 
                     <div class="modal-footer justify-content-between">
-                        <a type="button" href="/entry/pertLuas/{{ $tanaman->id }}" class="btn btn-default"
+                        <a type="button" href="{{ url('/entry/pertLuas/' . $tanaman->id) }}" class="btn btn-default"
                             data-dismiss="modal">Sebelumnya</a>
                         <button type="submit" name="submit2" value="submit2" class="btn btn-primary">Simpan</button>
                     </div>

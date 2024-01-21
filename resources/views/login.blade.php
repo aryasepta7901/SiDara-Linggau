@@ -52,7 +52,7 @@
                     </div>
                 @endif
 
-                <form action="/login" method="post">
+                <form action="{{ url('/login') }}" method="post">
                     @csrf
                     <div class="input-group mb-3">
                         <input type="text" class="form-control" placeholder="NIP" name="id">
@@ -87,7 +87,7 @@
                 <!-- /.social-auth-links -->
 
                 <p class="mb-1">
-                    <a href="/register">Register</a>
+                    <a href="{{ url('/register') }}">Register</a>
                 </p>
 
 

@@ -11,6 +11,7 @@ class EntrySBS extends Model
     use HasFactory, HasUuids;
 
     protected $table = 'entrysbs';
+    public $incrementing = false;
     protected $guarded = [];
 
     public function sbs()

@@ -34,7 +34,7 @@
 
             </div>
             <div class="card-body">
-                <form method="post" action="/validasi/dinas">
+                <form method="post" action="{{ url('/validasi/dinas') }}">
                     @csrf
                     @if ($entryNow->status == 2)
                         <button type="submit" class="btn btn-sm btn-info ml-auto"><i class="fa fa-send">

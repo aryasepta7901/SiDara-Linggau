@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\DashboardSBS;
 use App\Http\Controllers\EntrySBSController;
 use App\Http\Controllers\LoginController;
@@ -48,3 +49,5 @@ Route::resource('/profile', ProfileController::class)->middleware('auth');
 Route::resource('/validasi/dinas', ValidasiSBSDinasController::class)->middleware('auth');
 // Validasi BPS
 Route::resource('/validasi/bps', ValidasiSBSController::class)->middleware('auth');
+// Admin
+Route::resource('/admin/entrysbs', AdminController::class)->middleware('auth');

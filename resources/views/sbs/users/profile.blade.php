@@ -6,7 +6,7 @@
 
         </div>
         <div class="card">
-            <form method="post" action="/profile">
+            <form method="post" action="{{ url('/profile') }}">
                 @csrf
                 <p class="text-center text-bold my-3">Profile</p>
 
@@ -63,7 +63,7 @@
             </form>
         </div>
         <div class="card">
-            <form method="post" action="/profile">
+            <form method="post" action="{{ url('/profile') }}">
                 @csrf
                 <div class="card-body">
 

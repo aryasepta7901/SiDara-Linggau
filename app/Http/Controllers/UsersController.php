@@ -15,9 +15,14 @@ class UsersController extends Controller
      */
     public function index()
     {
+        if (auth()->user()->role == 'PML') {
+            $role = ['PCL', 'PML', 'AD'];
+        } elseif (auth()->user()->role == 'AD') {
+            $role = ['PCL'];
+        }
         return view('sbs.users.index', [
             'title' => 'Daftar User',
-            'users' => User::where('role', 'PCL')->get(),
+            'users' => User::whereIn('role', $role)->get(),
             'kecamatan' => Kecamatan::whereNotIn('id', [1674])->doesntHave('User')->get(),
         ]);
     }

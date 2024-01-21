@@ -3,7 +3,7 @@
 @section('content')
     <div class="col-lg-12">
         <div class="card">
-            <form method="post" action="/entry/storeMonthYearSelection">
+            <form method="post" action="{{ url('/entry/storeMonthYearSelection') }}">
                 <div class="card-body">
                     @csrf
                     <?php
@@ -133,7 +133,8 @@
                                             <div class="col-md-9">
                                                 <div class="card-body">
                                                     <h5 class="card-title"><a
-                                                            href="/entry/pertLuas/{{ $value->id }}">{{ $value->nama_tanaman }}</a>
+                                                            href="{{ url('/entry/pertLuas/' . $value->id) }}">{{ $value->nama_tanaman }}</a>
+
                                                     </h5>
                                                     {{-- <p class="card-text">This is a wider card with supporting text below as a natural
                                                     lead-in to additional content. This content is a little bit longer.</p> --}}

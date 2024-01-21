@@ -10,7 +10,7 @@
                     </i> </button> --}}
             </div>
             <div class="card-body">
-                <form method="post" action="/entry">
+                <form method="post" action="{{ url('/entry') }}">
                     @csrf
                     <input type="hidden" name="tanaman_id" value="{{ $tanaman->id }}">
                     <input type="hidden" name="kecamatan_id" value="{{ Auth()->user()->kec_id }}">
@@ -254,7 +254,9 @@
                     @endif
                     @if ($sbsLast->status_tanaman == 2)
                         <div class="modal-footer justify-content-between">
-                            <a type="button" href="/entry" class="btn btn-default" data-dismiss="modal">Close</a>
+
+                            <a type="button" href="{{ url('/entry') }}" class="btn btn-default"
+                                data-dismiss="modal">Close</a>
                             @if ($entryNow != null)
                                 @if ($entryNow->status != 2 && $entryNow->status != 4 && $entryNow->status != 6)
                                     <button type="submit" name="submit3" value="submit3"
@@ -267,7 +269,8 @@
                         </div>
                     @else
                         <div class="modal-footer justify-content-between">
-                            <a type="button" href="/entry" class="btn btn-default" data-dismiss="modal">Close</a>
+                            <a type="button" href="{{ url('/entry') }}" class="btn btn-default"
+                                data-dismiss="modal">Close</a>
                             @if ($entryNow != null)
                                 @if ($entryNow->status != 2 && $entryNow->status != 4 && $entryNow->status != 6)
                                     <button type="submit" name="submit1" value="submit1"

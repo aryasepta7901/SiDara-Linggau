@@ -39,7 +39,7 @@
                 @endif
 
                 <p class="text-center">Daftar Akun Baru</p>
-                <form action="/register" method="post">
+                <form action="{{ url('/register') }}" method="post">
                     @csrf
                     <div class="input-group mb-3">
                         <input type="text" class="form-control @error('nip') is-invalid  @enderror"
@@ -122,7 +122,7 @@
 
                 </form>
                 <p class="mb-1">
-                    <a href="/login">Login</a>
+                    <a href="{{ url('/login') }}">Login</a>
                 </p>
 
 

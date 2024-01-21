@@ -26,8 +26,8 @@ return new class extends Migration
             $table->double('min_harga', 10, 0);
             $table->double('max_harga', 10, 0);
             $table->string('satuan_harga', 20);
-            $table->double('min_produktivitas', 4, 0);
-            $table->double('max_produktivitas', 4, 0);
+            $table->double('min_produktivitas', 6, 2);
+            $table->double('max_produktivitas', 6, 2);
             $table->string('satuan_produktivitas', 20);
 
             $table->timestamps();

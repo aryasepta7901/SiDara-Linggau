@@ -35,16 +35,28 @@ class EntrySBSController extends Controller
             $bulanNow = $selectedMonth;
             $tahunNow = $selectedYear;
         } else {
-            // Mendapatkan tanggal saat ini
-            $today = Carbon::now();
-            // Mengurangkan satu bulan dari tanggal saat ini
-            $bulanTahun = $today->subMonth();
-            // Bulan sekarang
-            $bulanNow = date('m') == 1 ? 12 : date('m') - 1;
-            $tahunNow = date('m') == 1 ? date('Y') - 1 : date('Y');
-            // Menentukan bulan lalu
-            $bulanLalu = date('m') - 2 < 1 ? 11 : (date('m') - 2 == 2 ? 12 : date('m') - 2);
-            $tahunLalu = date('m') == 1 ? date('Y') - 1 : date('Y');
+            $tanggalNow = date('d');
+            if ($tanggalNow <= 19) {
+                // Mendapatkan tanggal saat ini
+                $today = Carbon::now();
+                // Mengurangkan satu bulan dari tanggal saat ini
+                $bulanTahun = $today->subMonth();
+                // Bulan sekarang
+                $bulanNow = date('m') == 1 ? 12 : date('m') - 1;
+                $tahunNow = date('m') == 1 ? date('Y') - 1 : date('Y');
+                // Menentukan bulan lalu
+                $bulanLalu = date('m') - 2 < 1 ? 11 : (date('m') - 2 == 2 ? 12 : date('m') - 2);
+                $tahunLalu = date('m') == 1 ? date('Y') - 1 : date('Y');
+            } elseif ($tanggalNow >= 20) {
+                // Mendapatkan tanggal saat ini
+                $bulanTahun = Carbon::now();
+                // Bulan sekarang
+                $bulanNow = date('m');
+                $tahunNow = date('Y');
+                // Menentukan bulan lalu
+                $bulanLalu =  date('m') == 1 ? 12 : date('m') - 1;
+                $tahunLalu =  date('m') == 1 ? date('Y') - 1 : date('Y');
+            }
         }
         $entryNow = EntrySBS::where('kec_id', auth()->user()->kec_id)->where('bulan', $bulanNow)->where('tahun', $tahunNow)->first();
         $entryLast = EntrySBS::where('kec_id', auth()->user()->kec_id)->where('bulan', $bulanLalu)->where('tahun', $tahunLalu)->where('status', 6)->first();
@@ -132,8 +144,14 @@ class EntrySBSController extends Controller
                     $bulanNow =  $selectedMonth;
                     $tahunNow =  $selectedYear;
                 } else {
-                    $bulanNow = date('m') == 1 ? 12 : date('m') - 1;
-                    $tahunNow = date('m') == 1 ? date('Y') - 1 : date('Y');
+                    $tanggalNow = date('d');
+                    if ($tanggalNow <= 19) {
+                        $bulanNow = date('m') == 1 ? 12 : date('m') - 1;
+                        $tahunNow = date('m') == 1 ? date('Y') - 1 : date('Y');
+                    } elseif ($tanggalNow >= 20) {
+                        $bulanNow = date('m');
+                        $tahunNow = date('Y');
+                    }
                 }
                 $data = EntrySBS::updateOrCreate(
                     [
@@ -203,8 +221,14 @@ class EntrySBSController extends Controller
                 $bulanNow =  $selectedMonth;
                 $tahunNow =  $selectedYear;
             } else {
-                $bulanNow = date('m') == 1 ? 12 : date('m') - 1;
-                $tahunNow = date('m') == 1 ? date('Y') - 1 : date('Y');
+                $tanggalNow = date('d');
+                if ($tanggalNow <= 19) {
+                    $bulanNow = date('m') == 1 ? 12 : date('m') - 1;
+                    $tahunNow = date('m') == 1 ? date('Y') - 1 : date('Y');
+                } elseif ($tanggalNow >= 20) {
+                    $bulanNow = date('m');
+                    $tahunNow = date('Y');
+                }
             }
             $data = EntrySBS::updateOrCreate(
                 [
@@ -224,13 +248,18 @@ class EntrySBSController extends Controller
             } else {
                 $r11 = $request->r11;
             }
+            if ($request->r10 == null && $request->r11 == null) {
+                $r12 = 0;
+            } else {
+                $r12 = $request->r12;
+            }
             SBS::updateOrCreate(
                 ['id' => $entry->id],
                 [
 
                     'r10' => $r10,
                     'r11' => $r11,
-                    'r12' => $request->r12,
+                    'r12' => $r12,
                     'note' => $request->note,
                     'status' => 1,
                 ]
@@ -256,8 +285,14 @@ class EntrySBSController extends Controller
                 $bulanNow =  $selectedMonth;
                 $tahunNow =  $selectedYear;
             } else {
-                $bulanNow = date('m') == 1 ? 12 : date('m') - 1;
-                $tahunNow = date('m') == 1 ? date('Y') - 1 : date('Y');
+                $tanggalNow = date('d');
+                if ($tanggalNow <= 19) {
+                    $bulanNow = date('m') == 1 ? 12 : date('m') - 1;
+                    $tahunNow = date('m') == 1 ? date('Y') - 1 : date('Y');
+                } elseif ($tanggalNow >= 20) {
+                    $bulanNow = date('m');
+                    $tahunNow = date('Y');
+                }
             }
             $data = EntrySBS::updateOrCreate(
                 [
@@ -306,6 +341,14 @@ class EntrySBSController extends Controller
                 // Menentukan bulan lalu
                 $bulanLalu = date('m') - 2 < 1 ? 11 : (date('m') - 2 == 2 ? 12 : date('m') - 2);
                 $tahunLalu = date('m') == 1 ? date('Y') - 1 : date('Y');
+                $tanggalNow = date('d');
+                if ($tanggalNow <= 19) {
+                    $bulanLalu = date('m') - 2 < 1 ? 11 : (date('m') - 2 == 2 ? 12 : date('m') - 2);
+                    $tahunLalu = date('m') == 1 ? date('Y') - 1 : date('Y');
+                } elseif ($tanggalNow >= 20) {
+                    $bulanLalu = date('m') == 1 ? 12 : date('m') - 1;
+                    $tahunLalu = date('m') == 1 ? date('Y') - 1 : date('Y');
+                }
             }
             $data = EntrySBS::updateOrCreate(
                 [
@@ -390,11 +433,22 @@ class EntrySBSController extends Controller
             $bulanLalu = $selectedMonth == 1 ? 12 : $selectedMonth - 1;
             $tahunLalu = $selectedMonth == 1 ? $selectedYear - 1 : $selectedYear;
         } else {
-            $bulanNow = date('m') == 1 ? 12 : date('m') - 1;
-            $tahunNow = date('m') == 1 ? date('Y') - 1 : date('Y');
-            // Menentukan bulan lalu
-            $bulanLalu = date('m') - 2 < 1 ? 11 : (date('m') - 2 == 2 ? 12 : date('m') - 2);
-            $tahunLalu = date('m') == 1 ? date('Y') - 1 : date('Y');
+            $tanggalNow = date('d');
+            if ($tanggalNow <= 19) {
+                // Bulan sekarang
+                $bulanNow = date('m') == 1 ? 12 : date('m') - 1;
+                $tahunNow = date('m') == 1 ? date('Y') - 1 : date('Y');
+                // Menentukan bulan lalu
+                $bulanLalu = date('m') - 2 < 1 ? 11 : (date('m') - 2 == 2 ? 12 : date('m') - 2);
+                $tahunLalu = date('m') == 1 ? date('Y') - 1 : date('Y');
+            } elseif ($tanggalNow >= 20) {
+                // Bulan sekarang
+                $bulanNow = date('m');
+                $tahunNow = date('Y');
+                // Menentukan bulan lalu
+                $bulanLalu =  date('m') == 1 ? 12 : date('m') - 1;
+                $tahunLalu =  date('m') == 1 ? date('Y') - 1 : date('Y');
+            }
         }
         $entryLast = EntrySBS::where('kec_id', auth()->user()->kec_id)->where('bulan', $bulanLalu)->where('tahun', $tahunLalu)->first();
         $entryNow = EntrySBS::where('kec_id', auth()->user()->kec_id)->where('bulan', $bulanNow)->where('tahun', $tahunNow)->first();
@@ -423,8 +477,16 @@ class EntrySBSController extends Controller
             $bulanNow =  $selectedMonth;
             $tahunNow =  $selectedYear;
         } else {
-            $bulanNow = date('m') == 1 ? 12 : date('m') - 1;
-            $tahunNow = date('m') == 1 ? date('Y') - 1 : date('Y');
+            $tanggalNow = date('d');
+            if ($tanggalNow <= 19) {
+                // Bulan sekarang
+                $bulanNow = date('m') == 1 ? 12 : date('m') - 1;
+                $tahunNow = date('m') == 1 ? date('Y') - 1 : date('Y');
+            } elseif ($tanggalNow >= 20) {
+                // Bulan sekarang
+                $bulanNow = date('m');
+                $tahunNow = date('Y');
+            }
         }
         $entryNow_id = EntrySBS::where('kec_id', auth()->user()->kec_id)->where('bulan', $bulanNow)->where('tahun', $tahunNow)->first()->id;
 
