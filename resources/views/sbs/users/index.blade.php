@@ -41,10 +41,13 @@
 
                                 </td>
                                 <td>
-                                    <button class="btn btn-primary btn-sm ml-2" data-toggle="modal"
-                                        data-target="#kecamatan{{ $value->id }}"><i class="fa fa-pen">
-                                        </i>
-                                    </button>
+                                    @if ($value->role == 'PCL')
+                                        <button class="btn btn-primary btn-sm ml-2" data-toggle="modal"
+                                            data-target="#kecamatan{{ $value->id }}"><i class="fa fa-pen">
+                                            </i>
+                                        </button>
+                                    @endif
+
                                     <button class="btn btn-success btn-sm ml-2" data-toggle="modal"
                                         data-target="#defaultPass{{ $value->id }}"><i class="fa fa-lock">
                                         </i> </button>
@@ -69,6 +72,7 @@
     </div>
     {{-- Modal --}}
     {{-- Edit --}}
+
     @foreach ($users as $value)
         <div class="modal fade" id="kecamatan{{ $value->id }}">
             <div class="modal-dialog">
@@ -132,7 +136,7 @@
                         @method('put')
                         <div class="modal-body">
                             Anda Akan mengubah Password <b>{{ $value->name }}</b> menjadi passsword default Yaitu: <small
-                                class="badge badge-info">password</small>
+                                class="badge badge-info">Password1234</small>
                             <hr>
                             Harap Beritahukan <b>{{ $value->name }}</b> untuk login menggunakan password default dan
                             mengubah password pada menu profile
@@ -161,12 +165,12 @@
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
-                        <form method="post" action="{{ url('/users/' . $value->id) }}">
+                        <form method="post" action="{{ url('/users/') }}">
                             @csrf
-                            @method('put')
 
                             <div class="modal-body">
                                 <div class="form-group">
+                                    <input type="hidden" value="{{ $value->id }}" name="user_id">
                                     <label class="@error('role') text-danger  @enderror" for="role">Role</label>
                                     @error('role')
                                         <small class="badge badge-danger"> *{{ $message }}
@@ -181,7 +185,7 @@
                             </div>
                             <div class="modal-footer justify-content-between">
                                 <a type="button" class="btn btn-default" data-dismiss="modal">Close</a>
-                                <button type="submit" name="role" value="role"
+                                <button type="submit" name="adminRole" value="adminRole"
                                     class="btn btn-primary">Ubah</button>
                             </div>
                         </form>

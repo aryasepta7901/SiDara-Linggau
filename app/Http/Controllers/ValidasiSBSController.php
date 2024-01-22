@@ -154,7 +154,6 @@ class ValidasiSBSController extends Controller
      */
     public function show(EntrySBS $bp)
     {
-        dd($bp);
         $this->authorize('bps');
 
         $entrySBS = EntrySBS::where('id', $bp->id)->first();

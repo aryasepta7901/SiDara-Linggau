@@ -1,0 +1,98 @@
+:root {
+    scroll-behavior: smooth;
+  }
+
+.myaccordion .card,
+.myaccordion .card:last-child .card-header {
+border: none;
+background: transparent; }
+
+.myaccordion .card-header {
+border: none;
+background: transparent; }
+.myaccordion .card-header p {
+    position: relative;
+    font-weight: 500;
+    font-size: 18px;
+    text-align: left; }
+
+.myaccordion .fa {
+font-size: 16px;
+color: rgba(0, 0, 0, 0.3); }
+
+.myaccordion .button {
+width: 100%;
+font-weight: normal;
+color: rgba(0, 0, 0, 0.8);
+padding: 0;
+letter-spacing: 0;
+border-radius: 0 !important;
+border-top: 1px solid rgba(0, 0, 0, 0.05);
+border-bottom: 1px solid rgba(0, 0, 0, 0.05); }
+
+.myaccordion .button-link:hover,
+.myaccordion .button-link:focus {
+text-decoration: none; }
+
+[data-toggle="collapse"] .fa:before {
+content: "\f3d8";
+font-family: "Ionicons";
+font-style: normal; }
+
+[data-toggle="collapse"].collapsed .fa:before {
+content: "\f3d0";
+font-family: "Ionicons";
+font-style: normal; }
+
+button[aria-expanded="true"] {
+background-color: #42dca3;
+color: #fff !important; }
+
+/*--------------------------------------------------------------
+# Sidebar
+--------------------------------------------------------------*/
+.sidebar-light-lightblue .nav-sidebar>.nav-item>.nav-link.active{
+    background-color: #8EC3B0;
+}
+
+/*--------------------------------------------------------------
+# Navbar
+--------------------------------------------------------------*/
+
+.navbar-light{
+    background-color: #8EC3B0;
+}
+
+.content-wrapper{
+    background-color: #f0f0f0;
+}
+
+/* Back to top */
+.back-to-top {
+position: fixed;
+visibility: hidden;
+opacity: 0;
+right: 15px;
+bottom: 15px;
+z-index: 99999;
+background: #42dca3  ;
+width: 40px;
+height: 40px;
+border-radius: 4px;
+transition: all 2s;
+}
+.back-to-top i {
+font-size: 24px;
+color: #fff;
+line-height: 0;
+}
+
+.back-to-top:hover {
+background: #8EC3B0;
+color: #fff;
+}
+
+.back-to-top.active {
+visibility: visible;
+opacity: 1;
+}

@@ -62,7 +62,7 @@ class DatabaseSeeder extends Seeder
                 'id' => '199811052021041001',
                 'name' => 'Raden Mulia',
                 'email' => 'raden.mulia@bps.go.id',
-                'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
+                'password' => '$2y$10$64wtuBDKS8A5b4Od.UMuBeCSGeg9dzr8XNYAnJU.MQYQz9/HwTzxK', // Password1234
                 'role' => 'PCL',
                 'kec_id' => '1674011'
             ],
@@ -70,7 +70,7 @@ class DatabaseSeeder extends Seeder
                 'id' => '198408242008012009',
                 'name' => ' Al Maratul Sholihah',
                 'email' => 'almaratul@bps.go.id',
-                'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
+                'password' => '$2y$10$64wtuBDKS8A5b4Od.UMuBeCSGeg9dzr8XNYAnJU.MQYQz9/HwTzxK', // Password1234
                 'role' => 'PML', //admin BPS
                 'kec_id' => '1674'
 
@@ -79,7 +79,7 @@ class DatabaseSeeder extends Seeder
                 'id' => '200109072023101003',
                 'name' => 'Muhammad Arya Septa Kovitra',
                 'email' => 'arya.septa@bps.go.id',
-                'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
+                'password' => '$2y$10$64wtuBDKS8A5b4Od.UMuBeCSGeg9dzr8XNYAnJU.MQYQz9/HwTzxK', // Password1234
                 'role' => 'AD', //admin Dinas
                 'kec_id' => '1674',
             ],

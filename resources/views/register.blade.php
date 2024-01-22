@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>AdminLTE 3 | Log in (v2)</title>
+    <title>Si-Dara| Register</title>
 
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet"
@@ -20,9 +20,9 @@
 <body class="hold-transition login-page">
     <div class="login-box">
         <!-- /.login-logo -->
-        <div class="card card-outline card-primary">
+        <div class="card card-outline card-success">
             <div class="card-header text-center">
-                <a href="{{ asset('template') }}/index2.html" class="h1"><b>SI-Dara</b> Linggau</a>
+                <a href="{{ url('/') }}" class="h1"><b>SI-Dara</b> Linggau</a>
             </div>
             <div class="card-body">
                 @if ($errors->any())
@@ -115,7 +115,7 @@
                     </div>
                     <div class="row">
                         <div class="col-12">
-                            <button type="submit" class="btn btn-primary btn-block">Daftar Akun</button>
+                            <button type="submit" class="btn btn-success btn-block">Daftar Akun</button>
                         </div>
 
                     </div>

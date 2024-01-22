@@ -8,7 +8,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Si-Dara | {{ $title }}</title>
     {{-- CSS Utama --}}
-    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="{{ asset('/css/style.css') }}">
 
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet"
@@ -34,7 +34,8 @@
     <link rel="stylesheet" href="/css/style.css"> {{-- https://preview.colorlib.com/theme/bac/accordion-03/ --}}
     <!-- jQuery -->
     <script src="{{ asset('template/plugins/jquery/jquery.min.js') }}"></script>
-
+    <link rel="stylesheet" type="text/css"
+        href="https://cdn.datatables.net/fixedheader/3.1.2/css/fixedHeader.dataTables.min.css">
 
 </head>
 
@@ -189,6 +190,7 @@
             }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
             $("#example2").DataTable({
                 "responsive": false,
+                "fixedHeader": true,
                 "lengthChange": false,
                 "autoWidth": false,
                 "paging": false,
@@ -343,33 +345,31 @@
         }
     </script> --}}
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const tableContainers = document.querySelectorAll('.table-container');
+        $(document).ready(function() {
+            var tableContainer = $(".table-container");
 
-            const createStickyClone = (headerRow) => {
-                const clone = headerRow.cloneNode(true);
-                clone.classList.add('sticky-col');
-                return clone;
-            };
-
-            const updateStickyHeader = (dataTable, stickyHeader) => {
-                const rect = dataTable.getBoundingClientRect();
-                stickyHeader.style.width = `${rect.width}px`;
-                stickyHeader.style.transform = `translateY(${rect.top}px)`;
-            };
-
-            tableContainers.forEach(tableContainer => {
-                const dataTable = tableContainer.querySelector('table');
-                const headerRow = dataTable.querySelector('thead tr');
-                const stickyHeader = createStickyClone(headerRow);
-                tableContainer.appendChild(stickyHeader);
-
-                window.addEventListener('scroll', () => updateStickyHeader(dataTable, stickyHeader));
-                window.addEventListener('resize', () => updateStickyHeader(dataTable, stickyHeader));
-                updateStickyHeader(dataTable, stickyHeader);
+            tableContainer.on("scroll", function() {
+                var offset = $(this).scrollLeft();
+                $(".sticky-column").css("transform", "translateX(" + offset + "px)");
             });
         });
     </script>
+    <script>
+        // Tambahkan script JavaScript untuk menangani perubahan isi tabel dan memperbarui gulirannya
+        var tableContainer = document.getElementById('scrollTable');
+        tableContainer.addEventListener('scroll', function() {
+            // Logika penanganan scroll jika diperlukan
+        });
+    </script>
+    {{-- <script>
+        // Tambahkan script JavaScript untuk menangani scroll dan memperbarui posisi header
+        var tableContainer = document.querySelector('.custom-scroll');
+        var header = document.querySelector('.sticky-header');
+
+        tableContainer.addEventListener('scroll', function() {
+            header.style.transform = 'translateY(' + tableContainer.scrollTop + 'px)';
+        });
+    </script> --}}
 
 </body>
 

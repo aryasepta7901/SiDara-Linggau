@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rules\Password;
 
 class LoginController extends Controller
 {
@@ -52,13 +53,23 @@ class LoginController extends Controller
             'nip' => 'required|unique:users,id',
             'name' => 'required',
             'email' => 'required|email|unique:users,email',
-            'password' => 'required|same:confirmPassword|min:5',
-            'confirmPassword' => 'required|same:password|min:5',
+            'password' => [
+                'required',
+                Password::min(8)
+                    // ->letters()
+                    ->mixedCase()
+                    ->numbers()
+                // ->symbols()
+                // ->uncompromised()
+            ],
+            'confirmPassword' => 'required|same:password',
         ],   [
             'required' => ':attribute Wajib di Isi',
             'email' => 'Alamat :attribute  Harus Valid',
             'same' => ':attribute dan :other  Harus Sama.',
             'unique' => ' :attribute sudah terdaftar',
+            'min' => ':attribute harus minimal :min. Karakter',
+
         ]);
         User::create(
             [

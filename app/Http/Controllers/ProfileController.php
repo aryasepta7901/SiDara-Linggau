@@ -17,7 +17,7 @@ class ProfileController extends Controller
     public function index()
     {
         return view('sbs.users.profile', [
-            'title' => 'Daftar User',
+            'title' => 'Profil Saya',
             'user' => User::where('id', auth()->user()->id)->first(),
 
         ]);
@@ -46,8 +46,8 @@ class ProfileController extends Controller
             # Validation
             $request->validate([
                 'passLama' => 'required',
-                'passBaru' => 'required|same:confirmPassBaru|min:5',
-                'confirmPassBaru' => 'required|same:passBaru|min:5',
+                'passBaru' => 'required|same:confirmPassBaru|min:8',
+                'confirmPassBaru' => 'required|same:passBaru',
             ],   [
                 'required' => ':attribute Wajib di Isi',
                 'same' => ':attribute dan :other  Harus Sama.',

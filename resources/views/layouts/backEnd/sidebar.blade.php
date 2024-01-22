@@ -11,8 +11,7 @@
         <!-- Sidebar user panel (optional) -->
         <div class="user-panel mt-3 pb-3 mb-3 d-flex">
             <div class="image">
-                <img src="{{ asset('template/dist/img/user2-160x160.jpg') }}" class="img-circle elevation-2"
-                    alt="User Image">
+                <img src="{{ asset('img/default.jpg') }}" class="img-circle elevation-2" alt="User Image">
             </div>
             <div class="info">
 
@@ -76,7 +75,7 @@
                             </p>
                         </a>
                     </li>
-                    <li class="nav-item">
+                    {{-- <li class="nav-item">
                         <a href="{{ url('/admin/entrysbs') }}"
                             class="nav-link {{ Request::is('admin*') ? 'active' : '' }}">
                             <i class="nav-icon fas fa-git"></i>
@@ -84,7 +83,7 @@
                                 Admin
                             </p>
                         </a>
-                    </li>
+                    </li> --}}
                 @endcan
                 <li class="nav-item">
                     <a href="{{ url('/profile') }}" class="nav-link {{ Request::is('profile*') ? 'active' : '' }}">

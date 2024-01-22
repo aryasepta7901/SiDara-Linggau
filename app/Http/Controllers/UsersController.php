@@ -45,7 +45,26 @@ class UsersController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        if ($request->adminRole) {
+            $request->validate([
+                'role' => 'required',
+            ],   [
+                'required' => ':attribute Wajib di Pilih',
+            ]);
+            if ($request->role == 'AD' || $request->role == 'PML') {
+
+                User::where('id', $request->user_id)->update([
+                    'role' => $request->role,
+                    'kec_id' => '1674',
+                ]);
+            } else {
+                User::where('id', $request->user_id)->update(['role' => $request->role]);
+            }
+
+
+
+            return redirect()->back()->with('success', 'Berhasil Mengubah Role User');
+        }
     }
 
     /**
@@ -95,7 +114,7 @@ class UsersController extends Controller
             }
         }
         if ($request->defaultPass) {
-            User::where('id', $user->id)->update(['password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi']);
+            User::where('id', $user->id)->update(['password' => '$2y$10$64wtuBDKS8A5b4Od.UMuBeCSGeg9dzr8XNYAnJU.MQYQz9/HwTzxK']);
             return redirect()->back()->with('success', 'Password Default Berhasil di terapkan');
         }
     }

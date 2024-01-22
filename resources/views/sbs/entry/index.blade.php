@@ -51,8 +51,9 @@
                                     @php
                                         // Menampilkan opsi bulan
                                         foreach ($bulanIndonesia as $index => $namaBulan) {
-                                            $selected = $index + 1 == $bulanNow ? 'selected' : '';
-                                            echo "<option value='" . ($index + 1) . "' $selected>$namaBulan</option>";
+                                            $bulanValue = str_pad($index + 1, 2, '0', STR_PAD_LEFT); // Menambahkan 0 di depan jika panjang string-nya kurang dari dua digit
+                                            $selected = $bulanValue == $bulanNow ? 'selected' : '';
+                                            echo "<option value='$bulanValue' $selected>$namaBulan</option>";
                                         }
                                     @endphp
                                 </select>
