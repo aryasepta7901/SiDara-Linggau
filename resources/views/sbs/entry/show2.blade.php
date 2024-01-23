@@ -19,19 +19,19 @@
                         <input type="hidden" name="r6" value="{{ $sbsNow->r6 }}">
                         <input type="hidden" name="min_harga" value="{{ $tanaman->min_harga }}">
                         <input type="hidden" name="max_harga" value="{{ $tanaman->max_harga }}">
-                        @if ($sbsNow->r5 != null && $sbsNow->r6 != null)
+                        @if ($sbsNow->r5 != 0 || $sbsNow->r6 != 0)
                             <p class="text-center text-bold my-3">Produksi (Kuintal)</p>
                         @endif
                         <div class="row">
                             @if ($tanaman->belum_habis == 1)
-                                @if ($sbsNow->r5 != null)
-                                    <div @if ($sbsNow->r6 != null) class="col-lg-6" @else class="col-lg-12" @endif
+                                @if ($sbsNow->r5 != 0)
+                                    <div @if ($sbsNow->r6 != 0) class="col-lg-6" @else class="col-lg-12" @endif
                                         id="conditionalInputDiv1">
                                         <div class="form-group">
                                             <label for="conditionalInput">R10: Produksi Dipanen Habis/Dibongkar</label>
                                             <input type="number" class="form-control @error('r10') is-invalid  @enderror"
                                                 id="r10" name="r10"
-                                                @if ($sbsNow->r10 != null) value="{{ old('r10', $sbsNow->r10) }}" @else  value="{{ old('r10', 0.0) }}" @endif
+                                                @if ($sbsNow->r10 != 0) value="{{ old('r10', $sbsNow->r10) }}" @else  value="{{ old('r10', 0.0) }}" @endif
                                                 step=".01" min="0">
                                             @error('r10')
                                                 <div class="invalid-feedback">
@@ -41,14 +41,14 @@
                                         </div>
                                     </div>
                                 @endif
-                                @if ($sbsNow->r6 != null)
-                                    <div @if ($sbsNow->r5 != null) class="col-lg-6" @else class="col-lg-12" @endif
+                                @if ($sbsNow->r6 != 0)
+                                    <div @if ($sbsNow->r5 != 0) class="col-lg-6" @else class="col-lg-12" @endif
                                         id="conditionalInputDiv2">
                                         <div class="form-group">
                                             <label for="pekerjaan">R11: Produksi Belum Habis</label>
                                             <input type="number" class="form-control @error('r11') is-invalid  @enderror"
                                                 id="r11" name="r11"
-                                                @if ($sbsNow->r11 != null) value="{{ old('r11', $sbsNow->r11) }}" @else  value="{{ old('r11', 0.0) }}" @endif
+                                                @if ($sbsNow->r11 != 0) value="{{ old('r11', $sbsNow->r11) }}" @else  value="{{ old('r11', 0.0) }}" @endif
                                                 step=".01" min="0">
                                             @error('r11')
                                                 <div class="invalid-feedback">
@@ -64,7 +64,7 @@
                                         <label for="pekerjaan">R10: Produksi Dipanen Habis/Dibongkar</label>
                                         <input type="number"class="form-control @error('r10') is-invalid  @enderror"
                                             name="r10"
-                                            @if ($sbsNow->r10 != null) value="{{ old('r10', $sbsNow->r10) }}" @else  value="{{ old('r10', 0.0) }}" @endif
+                                            @if ($sbsNow->r10 != 0) value="{{ old('r10', $sbsNow->r10) }}" @else  value="{{ old('r10', 0.0) }}" @endif
                                             step=".01" min="0">
                                         @error('r10')
                                             <div class="invalid-feedback">
@@ -74,24 +74,24 @@
                                     </div>
                                 </div>
                             @endif
-                            <p>{{ $tanaman->min_produktivitas }} -{{ $tanaman->max_produktivitas }}</p>
+                            {{-- <p>{{ $tanaman->min_produktivitas }} -{{ $tanaman->max_produktivitas }}</p> --}}
 
                         </div>
                         <hr>
-                        @if ($sbsNow->r5 != null || $sbsNow->r6 != null)
+                        @if ($sbsNow->r5 != 0 || $sbsNow->r6 != 0)
                             <div class="form-group">
                                 <label for="r12">R12: Harga Jual Petani Per Kilogram (Rupiah)</label>
                                 <input type="number" class="form-control @error('r12') is-invalid  @enderror"
                                     id="r12" name="r12"
-                                    @if ($sbsNow->r12 != null) value="{{ old('r12', $sbsNow->r12) }}" @else  value="{{ old('r12', 0.0) }}" @endif
+                                    @if ($sbsNow->r12 != 0) value="{{ old('r12', $sbsNow->r12) }}" @else  value="{{ old('r12', 0.0) }}" @endif
                                     min="{{ $tanaman->min_harga }}" max="{{ $tanaman->max_harga }}">
                                 @error('r12')
                                     <div class="invalid-feedback">
                                         {{ $message }}
                                     </div>
                                 @enderror
-                                <p class="text-info">Note: Harga Jual Harus diantara {{ $tanaman->min_harga }} dan
-                                    {{ $tanaman->max_harga }} (Rupiah)</p>
+                                {{-- <p class="text-info">Note: Harga Jual Harus diantara {{ $tanaman->min_harga }} dan
+                                    {{ $tanaman->max_harga }} (Rupiah)</p> --}}
                             </div>
                         @endif
                         <div class="form-group">

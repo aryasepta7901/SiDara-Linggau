@@ -26,7 +26,7 @@
 
         <div class="card">
             <div class="card-header d-flex justify-content-between">
-                <table class="table table-head-fixed text-nowrap">
+                {{-- <table class="table table-head-fixed text-nowrap">
                     <thead>
                         <tr>
                             <th>ID</th>
@@ -94,7 +94,7 @@
                             <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
                         </tr>
                     </tbody>
-                </table>
+                </table> --}}
             </div>
             <div class="card-body ">
                 <form method="post" action="{{ url('/validasi/bps') }}">

@@ -80,7 +80,7 @@
                                 <td>{{ $loop->iteration }}</td>
                                 <td>{{ $value->kecamatan }}</td>
                                 @if ($entryNow !== null)
-                                    @if ($entryNow->status === 2)
+                                    @if ($entryNow->status == 2)
                                         <td class="text-center">
                                             <button class="btn btn-success btn-sm"><i class="fas fa-check"></i>
                                             </button>
@@ -88,7 +88,7 @@
                                                 class="btn btn-primary btn-sm"><i class="fas fa-pen"></i>
                                             </a>
                                         </td>
-                                    @elseif($entryNow->status === 4)
+                                    @elseif($entryNow->status == 4)
                                         <td class="text-center">
                                             <button class="btn btn-success btn-sm">Dinas Setuju</i>
                                             </button>
@@ -96,7 +96,7 @@
                                                 class="btn btn-primary btn-sm"><i class="fas fa-pen"></i>
                                             </a>
                                         </td>
-                                    @elseif($entryNow->status === 6)
+                                    @elseif($entryNow->status == 6)
                                         <td class="text-center">
                                             <button class="btn btn-success btn-sm">BPS Setuju</i>
                                             </button>
@@ -104,13 +104,13 @@
                                                 class="btn btn-primary btn-sm"><i class="fas fa-eye"></i>
                                             </a>
                                         </td>
-                                    @elseif($entryNow->status === 3)
+                                    @elseif($entryNow->status == 3)
                                         <td class="text-center"><button class="btn btn-warning btn-sm">Revisi Dinas</button>
                                         </td>
-                                    @elseif($entryNow->status === 5)
+                                    @elseif($entryNow->status == 5)
                                         <td class="text-center"><button class="btn btn-warning btn-sm">Revisi BPS</button>
                                         </td>
-                                    @elseif($entryNow->status === 0)
+                                    @elseif($entryNow->status == 0)
                                         <td class="text-center"><button class="btn btn-info btn-sm"><i
                                                     class="fas fa-spinner"></i></button></td>
                                     @endif
