@@ -37,7 +37,7 @@
                 <form method="post" action="{{ url('/validasi/dinas') }}">
                     @csrf
                     @if ($entryNow->status == 2)
-                        <button type="submit" class="btn btn-sm btn-info ml-auto"><i class="fa fa-send">
+                        <button type="submit" class="btn btn-sm btn-info ml-auto"><i class="fas fa-paper-plane">
                             </i> Kirim</button>
                     @endif
 

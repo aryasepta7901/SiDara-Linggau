@@ -42,11 +42,11 @@ class EntrySBSController extends Controller
                 // Mengurangkan satu bulan dari tanggal saat ini
                 $bulanTahun = $today->subMonth();
                 // Bulan sekarang
-                $bulanNow = date('m') == 1 ? 12 : date('m') - 1;
+                $bulanNow = sprintf("%02d", date('m') == 1 ? 12 : date('m') - 1);
                 $tahunNow = date('m') == 1 ? date('Y') - 1 : date('Y');
                 // Menentukan bulan lalu
-                $bulanLalu = date('m') - 2 < 1 ? 11 : (date('m') - 2 == 2 ? 12 : date('m') - 2);
-                $tahunLalu = date('m') == 1 ? date('Y') - 1 : date('Y');
+                $bulanLalu = sprintf("%02d", date('m') - 2 == -1 ? 11 : (date('m') == 2 ? 12 : date('m') - 2));
+                $tahunLalu = date('m') <= 2 ? date('Y') - 1 : date('Y');
             } elseif ($tanggalNow >= 20) {
                 // Mendapatkan tanggal saat ini
                 $bulanTahun = Carbon::now();
@@ -54,7 +54,7 @@ class EntrySBSController extends Controller
                 $bulanNow = date('m');
                 $tahunNow = date('Y');
                 // Menentukan bulan lalu
-                $bulanLalu =  date('m') == 1 ? 12 : date('m') - 1;
+                $bulanLalu =  sprintf("%02d", date('m') == 1 ? 12 : date('m') - 1);
                 $tahunLalu =  date('m') == 1 ? date('Y') - 1 : date('Y');
             }
         }
@@ -146,8 +146,8 @@ class EntrySBSController extends Controller
                 } else {
                     $tanggalNow = date('d');
                     if ($tanggalNow <= 19) {
-                        $bulanNow = date('m') == 1 ? 12 : date('m') - 1;
-                        $tahunNow = date('m') == 1 ? date('Y') - 1 : date('Y');
+                        $bulanNow = sprintf("%02d", date('m') == 1 ? 12 : date('m') - 1);
+                        $tahunNow =   date('m') == 1 ? date('Y') - 1 : date('Y');
                     } elseif ($tanggalNow >= 20) {
                         $bulanNow = date('m');
                         $tahunNow = date('Y');
@@ -223,7 +223,7 @@ class EntrySBSController extends Controller
             } else {
                 $tanggalNow = date('d');
                 if ($tanggalNow <= 19) {
-                    $bulanNow = date('m') == 1 ? 12 : date('m') - 1;
+                    $bulanNow = sprintf("%02d", date('m') == 1 ? 12 : date('m') - 1);
                     $tahunNow = date('m') == 1 ? date('Y') - 1 : date('Y');
                 } elseif ($tanggalNow >= 20) {
                     $bulanNow = date('m');
@@ -287,7 +287,7 @@ class EntrySBSController extends Controller
             } else {
                 $tanggalNow = date('d');
                 if ($tanggalNow <= 19) {
-                    $bulanNow = date('m') == 1 ? 12 : date('m') - 1;
+                    $bulanNow = sprintf("%02d", date('m') == 1 ? 12 : date('m') - 1);
                     $tahunNow = date('m') == 1 ? date('Y') - 1 : date('Y');
                 } elseif ($tanggalNow >= 20) {
                     $bulanNow = date('m');
@@ -339,14 +339,13 @@ class EntrySBSController extends Controller
                 $tahunLalu =  $selectedMonth == 1 ? $selectedYear - 1 : $selectedYear;
             } else {
                 // Menentukan bulan lalu
-                $bulanLalu = date('m') - 2 < 1 ? 11 : (date('m') - 2 == 2 ? 12 : date('m') - 2);
-                $tahunLalu = date('m') == 1 ? date('Y') - 1 : date('Y');
                 $tanggalNow = date('d');
                 if ($tanggalNow <= 19) {
-                    $bulanLalu = date('m') - 2 < 1 ? 11 : (date('m') - 2 == 2 ? 12 : date('m') - 2);
-                    $tahunLalu = date('m') == 1 ? date('Y') - 1 : date('Y');
+                    $bulanLalu = sprintf("%02d", date('m') - 2 == -1 ? 11 : (date('m') == 2 ? 12 : date('m') - 2));
+
+                    $tahunLalu = date('m') <= 2 ? date('Y') - 1 : date('Y');;
                 } elseif ($tanggalNow >= 20) {
-                    $bulanLalu = date('m') == 1 ? 12 : date('m') - 1;
+                    $bulanLalu = sprintf("%02d", date('m') == 1 ? 12 : date('m') - 1);
                     $tahunLalu = date('m') == 1 ? date('Y') - 1 : date('Y');
                 }
             }
@@ -374,7 +373,7 @@ class EntrySBSController extends Controller
                     'entry_id' => $data->id,
                     'tanaman_id' => $request->Btntanaman_id,
                     'user_id' => auth()->user()->id,
-                    'status' => 4,
+                    'status' => 6,
                     'status_tanaman' => 2 // tanaman_baru
                 ];
                 SBS::create($data);
@@ -385,6 +384,9 @@ class EntrySBSController extends Controller
             return redirect('/entry')->with('success', 'Berhasil Menambahkan Komoditas Baru, Silahkan Lakukan Entry Pada Komoditas Tersebut');
         }
         if ($request->sendKues) {
+            //$bulan = sprintf("%02d", $request->bulan);
+
+
             $EntrySBS = EntrySBS::where('kec_id', auth()->user()->kec_id)->where('bulan', $request->bulan)->where('tahun', $request->tahun)->first();
 
             if ($EntrySBS->status == 5) {
@@ -436,17 +438,17 @@ class EntrySBSController extends Controller
             $tanggalNow = date('d');
             if ($tanggalNow <= 19) {
                 // Bulan sekarang
-                $bulanNow = date('m') == 1 ? 12 : date('m') - 1;
+                $bulanNow = sprintf("%02d", date('m') == 1 ? 12 : date('m') - 1);
                 $tahunNow = date('m') == 1 ? date('Y') - 1 : date('Y');
                 // Menentukan bulan lalu
-                $bulanLalu = date('m') - 2 < 1 ? 11 : (date('m') - 2 == 2 ? 12 : date('m') - 2);
-                $tahunLalu = date('m') == 1 ? date('Y') - 1 : date('Y');
+                $bulanLalu = sprintf("%02d", date('m') - 2 == -1 ? 11 : (date('m') == 2 ? 12 : date('m') - 2));
+                $tahunLalu = date('m') <= 2 ? date('Y') - 1 : date('Y');
             } elseif ($tanggalNow >= 20) {
                 // Bulan sekarang
                 $bulanNow = date('m');
                 $tahunNow = date('Y');
                 // Menentukan bulan lalu
-                $bulanLalu =  date('m') == 1 ? 12 : date('m') - 1;
+                $bulanLalu =  sprintf("%02d", date('m') == 1 ? 12 : date('m') - 1);
                 $tahunLalu =  date('m') == 1 ? date('Y') - 1 : date('Y');
             }
         }
@@ -480,7 +482,7 @@ class EntrySBSController extends Controller
             $tanggalNow = date('d');
             if ($tanggalNow <= 19) {
                 // Bulan sekarang
-                $bulanNow = date('m') == 1 ? 12 : date('m') - 1;
+                $bulanNow = sprintf("%02d", date('m') == 1 ? 12 : date('m') - 1);
                 $tahunNow = date('m') == 1 ? date('Y') - 1 : date('Y');
             } elseif ($tanggalNow >= 20) {
                 // Bulan sekarang

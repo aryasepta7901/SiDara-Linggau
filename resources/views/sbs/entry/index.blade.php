@@ -94,12 +94,12 @@
                             ($sbsNow == $sbsLast && $entryNow->status == 0) ||
                                 ($sbsNow == $sbsLast && $entryNow->status == 3) ||
                                 ($sbsNow == $sbsLast && $entryNow->status == 5))
-                            <form method="post" action="/entry">
+                            <form method="post" action="{{ url('/entry') }}">
                                 @csrf
                                 <input type="hidden" name="bulan" value="{{ $bulanNow }}">
                                 <input type="hidden" name="tahun" value="{{ $tahunNow }}">
                                 <button class="btn btn-success" type="submit" name="sendKues" value="sendKues"><i
-                                        class="fa fa-send">
+                                        class="fas fa-paper-plane">
                                     </i> </button>
                             </form>
                         @endif
@@ -268,7 +268,7 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <form method="post" action="/entry">
+                <form method="post"action="{{ url('/entry') }}">
                     @csrf
                     <div class="modal-body">
                         <table id="example1" class="table table-bordered table-striped ">
@@ -314,7 +314,7 @@
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    <form method="post" action="/entry/{{ $value->id }}">
+                    <form method="post" action="{{ url('/entry/' . $value->id) }}">
                         @method('delete')
                         @csrf
                         <div class="modal-body">

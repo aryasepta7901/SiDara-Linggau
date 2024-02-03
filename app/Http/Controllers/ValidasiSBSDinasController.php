@@ -151,6 +151,7 @@ class ValidasiSBSDinasController extends Controller
      */
     public function show(EntrySBS $dina)
     {
+
         $this->authorize('dinas');
 
         $entrySBS = EntrySBS::where('id', $dina->id)->first();
