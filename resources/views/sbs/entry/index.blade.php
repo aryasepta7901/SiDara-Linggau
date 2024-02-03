@@ -2,6 +2,59 @@
 
 @section('content')
     <div class="col-lg-12">
+
+        @if ($entryNow !== null)
+            @if ($entryNow->status == 0)
+                @php
+                    $text = 'Entry Sedang dilakukan, jika sudah selesai silahkan klik tombol kirim';
+                    $alert = 'info';
+                @endphp
+            @elseif($entryNow->status == 2)
+                @php
+                    $text = 'Formulir telah di kirimkan kepada <b>Admin Dinas</b> untuk dilakukan reviu';
+                    $alert = 'success';
+                @endphp
+            @elseif($entryNow->status == 3)
+                @php
+                    $text = 'Terdapat revisi dari <b>Admin Dinas</b>. Perhatikan catatan yang diberikan dan lakukan perbaikan. <br> Jika sudah selesai silahkan klik tombol kirim';
+                    $alert = 'warning';
+                @endphp
+            @elseif($entryNow->status == 4)
+                @php
+                    $text = 'Entry disetujui <b>Admin Dinas</b>, Formulir Akan dikirimkan kepada <b>BPS</b>';
+                    $alert = 'success';
+                @endphp
+            @elseif($entryNow->status == 5)
+                @php
+                    $text = 'Terdapat revisi dari <b>BPS</b>. Perhatikan catatan yang diberikan dan lakukan perbaikan. <br> Jika sudah selesai silahkan klik tombol kirim';
+                    $alert = 'warning';
+                @endphp
+            @elseif($entryNow->status == 6)
+                @php
+                    $text = 'Entry disetujui <b>BPS</b>, Data Sudah Final';
+                    $alert = 'success';
+                @endphp
+            @endif
+            <div class="alert alert-{{ $alert }} alert-dismissible">
+                <button type="button" class="close"></button>
+                <p><i class="icon fas fa-info"></i> {!! $text !!}
+
+                    @if ($entryNow->status == 2 || $entryNow->status == 4 || $entryNow->status == 6)
+                        <hr>
+                        <a href="{{ url('/entry/' . $entryNow->id) }}" class="btn btn-sm btn-info">Lihat Rekapitulasi Data <i
+                                class="fas fa-eye"></i>
+                        </a>
+                    @endif
+
+                </p>
+            </div>
+        @elseif($entryLast != null)
+            <div class="alert alert-info alert-dismissible">
+                <button type="button" class="close"></button>
+                <p><i class="icon fas fa-info"></i>Entry belum dilakukan, silahkan lakukan entry</p>
+            </div>
+        @endif
+
         <div class="card">
             <form method="post" action="{{ url('/entry/storeMonthYearSelection') }}">
                 <div class="card-body">
@@ -10,21 +63,6 @@
                     // Daftar nama bulan dalam Bahasa Indonesia
                     $bulanIndonesia = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
                     ?>
-                    {{-- @php
-                        $entryNowStatus1 = App\Models\EntrySBS::where('kec_id', auth()->user()->kec_id)
-                            ->where('bulan', $bulanNow)
-                            ->where('tahun', $tahunNow)
-                            ->whereIn('status_entry', [1, 2, 4])
-                            ->get(); //entry Bulan Ini yang belum disubmit dan sudah disubmit serta yang di acc dinas
-                        $entryNowStatus2 = App\Models\EntrySBS::where('kec_id', auth()->user()->kec_id)
-                            ->where('bulan', $bulanNow)
-                            ->where('tahun', $tahunNow)
-                            ->wherein('status_entry', [2, 4])
-                            ->get(); //yang sudah disubmit
-                        $totalEntryNow1 = $entryNowStatus1->count(); //belum submit
-                        $totalEntryNow2 = $entryNowStatus2->count(); //sudah submit
-                        $totalEntryLast = $tanaman->count(); //entry Bulan Lalu
-                    @endphp --}}
                     <div class="row">
                         <div class="col-lg-6">
                             <div class="form-group">
@@ -100,7 +138,7 @@
                                 <input type="hidden" name="tahun" value="{{ $tahunNow }}">
                                 <button class="btn btn-success" type="submit" name="sendKues" value="sendKues"><i
                                         class="fas fa-paper-plane">
-                                    </i> </button>
+                                    </i> Kirim </button>
                             </form>
                         @endif
                         @if ($entryNow->status == 0 || $entryNow->status == 1 || $entryNow->status == 3 || $entryNow->status == 5)

@@ -412,15 +412,22 @@ class EntrySBSController extends Controller
      * @param  \App\Models\Tanaman  $EntrySBS
      * @return \Illuminate\Http\Response
      */
-    // public function show(Tanaman $entry)
-    // {
-    //     return view('entry.sbs.show', [
-    //         'title' => 'Tanaman ' . $entry->nama_tanaman,
-    //         'entry' => EntrySBS::where('tanaman_id', $entry->id)->where('kec_id', auth()->user()->kec_id)->where('bulan', 10)->first(),
-    //         'tanaman' => Tanaman::where('id', $entry->id)->first(),
+    public function show(Tanaman $entrysbs)
+    {
+        $this->authorize('pcl');
 
-    //     ]);
-    // }
+        $id = last(explode('/', request()->url()));
+        $entrySBS = EntrySBS::where('id', $id)->first();
+        $bulanTahun = Carbon::createFromDate($entrySBS->tahun, $entrySBS->bulan, 1);
+        return view('sbs.entry.show', [
+            'title' => "Kecamatan " . $entrySBS->kecamatan->kecamatan . "(" . Carbon::parse($bulanTahun)->isoFormat('MMMM YYYY', 'id') . ")",
+            'bulan' => $entrySBS->bulan,
+            'tahun' =>  $entrySBS->tahun,
+            'kecamatan' => $entrySBS->kec_id,
+            'entryNow' => EntrySBS::where('kec_id', $entrySBS->kec_id)->where('bulan', $entrySBS->bulan)->where('tahun', $entrySBS->tahun)->first(),
+            'tanaman' => Tanaman::where('jenis_sph', 'SBS')->orderBy('urut_kues', 'asc')->get(),
+        ]);
+    }
     public function pertLuas(Tanaman $entry)
     {
         $this->authorize('pcl');

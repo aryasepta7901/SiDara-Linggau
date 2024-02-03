@@ -102,11 +102,15 @@
         <!-- Main Footer -->
         <footer class="main-footer">
             <!-- To the right -->
-            <div class="float-right d-none d-sm-inline">
+            {{-- <div class="float-right d-none d-sm-inline">
                 <b href="https://adminlte.io">SIDara</b>.
-            </div>
+            </div> --}}
             <!-- Default to the left -->
-            <strong>Copyright &copy; {{ date('Y') }} </strong>
+            <div class="text-center copyright">
+                &copy; Copyright <strong><span>Fungsi Integrasi Pengolahan Data (IPD) BPS Kota Lubuk
+                        Linggau</span></strong>.
+                2024
+            </div>
         </footer>
     </div>
     <!-- ./wrapper -->
@@ -197,8 +201,8 @@
                 // "ordering": true,
                 "info": false,
                 // "autoWidth": false,
-                // "buttons": ["csv", "excel"]
-            }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+                "buttons": ["excel"]
+            }).buttons().container().appendTo('#example2_wrapper .col-md-6:eq(0)');
         });
     </script>
     <script>
