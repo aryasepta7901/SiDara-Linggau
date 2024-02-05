@@ -31,7 +31,7 @@
                                             <label for="conditionalInput">R10: Produksi Dipanen Habis/Dibongkar</label>
                                             <input type="number" class="form-control @error('r10') is-invalid  @enderror"
                                                 id="r10" name="r10"
-                                                @if ($sbsNow->r10 != 0) value="{{ old('r10', $sbsNow->r10) }}" @else  value="{{ old('r10', 0.0) }}" @endif
+                                                @if ($sbsNow->r10 != 0) value="{{ old('r10', $sbsNow->r10) }}" @else  value="{{ old('r10') }}" @endif
                                                 step=".01" min="0">
                                             @error('r10')
                                                 <div class="invalid-feedback">
@@ -48,7 +48,7 @@
                                             <label for="pekerjaan">R11: Produksi Belum Habis</label>
                                             <input type="number" class="form-control @error('r11') is-invalid  @enderror"
                                                 id="r11" name="r11"
-                                                @if ($sbsNow->r11 != 0) value="{{ old('r11', $sbsNow->r11) }}" @else  value="{{ old('r11', 0.0) }}" @endif
+                                                @if ($sbsNow->r11 != 0) value="{{ old('r11', $sbsNow->r11) }}" @else  value="{{ old('r11') }}" @endif
                                                 step=".01" min="0">
                                             @error('r11')
                                                 <div class="invalid-feedback">
@@ -64,7 +64,7 @@
                                         <label for="pekerjaan">R10: Produksi Dipanen Habis/Dibongkar</label>
                                         <input type="number"class="form-control @error('r10') is-invalid  @enderror"
                                             name="r10"
-                                            @if ($sbsNow->r10 != 0) value="{{ old('r10', $sbsNow->r10) }}" @else  value="{{ old('r10', 0.0) }}" @endif
+                                            @if ($sbsNow->r10 != 0) value="{{ old('r10', $sbsNow->r10) }}" @else  value="{{ old('r10') }}" @endif
                                             step=".01" min="0">
                                         @error('r10')
                                             <div class="invalid-feedback">
@@ -83,7 +83,7 @@
                                 <label for="r12">R12: Harga Jual Petani Per Kilogram (Rupiah)</label>
                                 <input type="number" class="form-control @error('r12') is-invalid  @enderror"
                                     id="r12" name="r12"
-                                    @if ($sbsNow->r12 != 0) value="{{ old('r12', $sbsNow->r12) }}" @else  value="{{ old('r12', 0.0) }}" @endif
+                                    @if ($sbsNow->r12 != 0) value="{{ old('r12', $sbsNow->r12) }}" @else  value="{{ old('r12') }}" @endif
                                     min="{{ $tanaman->min_harga }}" max="{{ $tanaman->max_harga }}">
                                 @error('r12')
                                     <div class="invalid-feedback">

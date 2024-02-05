@@ -24,7 +24,7 @@
                                     ({{ $tanaman->satuan_luas }}) </label>
                                 <input type="number" class="form-control @error('r8') is-invalid  @enderror" id="r8"
                                     name="r8"
-                                    @if ($sbsNow != null) value="{{ old('r8', $sbsNow->r8) }}" @else  value="{{ old('r8', 0.0) }}" @endif
+                                    @if ($sbsNow != null) value="{{ old('r8', $sbsNow->r8) }}" @else  value="{{ old('r8') }}" @endif
                                     step=".01" min="0">
                                 @error('r8')
                                     <div class="invalid-feedback">
@@ -51,12 +51,17 @@
                             <div class="form-group">
                                 <label for="pekerjaan">R4: Luas Tanaman Akhir Bulan Yang Lalu
                                     ({{ $tanaman->satuan_luas }})</label>
-                                <input type="number" class="form-control" name="r4" id="r4"
-                                    @if ($sbsLast != null) value="{{ $sbsLast->r9 }}" readonly 
-                                    
-                                @else value="{{ old('r4', $sbsNow->r4) }}" @endif>
+                                <input type="number" class="form-control  @error('r4') is-invalid  @enderror"
+                                    name="r4" id="r4"
+                                    @if ($sbsLast != null && $bulanNow == 1 && $sbsNow == null) value="{{ $sbsLast->r9 }}"  
+                                    @elseif($sbsNow != null && $bulanNow == 1) value="{{ $sbsNow->r4 }}" 
+                                    @elseif($sbsLast != null)  value="{{ $sbsLast->r9 }}" readonly @endif>
+                                @error('r4')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
                             </div>
-
                             <hr>
                             {{-- <p class="text-center text-bold my-3">Luas Panen ({{ $tanaman->satuan_luas }})</p> --}}
                             <div class="row">
@@ -68,7 +73,7 @@
                                             <input type="number" id="input1" oninput="showHideInput1()"
                                                 class="form-control @error('r5') is-invalid  @enderror @if (Session::has('error1')) is-invalid @endif"
                                                 id="r5" name="r5"
-                                                @if ($sbsNow != null) value="{{ old('r5', $sbsNow->r5) }}" @else  value="{{ old('r5', 0.0) }}" @endif
+                                                @if ($sbsNow != null) value="{{ old('r5', $sbsNow->r5) }}" @else  value="{{ old('r5') }}" @endif
                                                 step=".01" min="0">
                                             @error('r5')
                                                 <div class="invalid-feedback">
@@ -84,7 +89,7 @@
                                             <input type="number" id="input2"
                                                 oninput="showHideInput2()"class="form-control @error('r6') is-invalid  @enderror @if (Session::has('error1')) is-invalid @endif"
                                                 id="r6" name="r6"
-                                                @if ($sbsNow != null) value="{{ old('r6', $sbsNow->r6) }}" @else  value="{{ old('r6', 0.0) }}" @endif
+                                                @if ($sbsNow != null) value="{{ old('r6', $sbsNow->r6) }}" @else  value="{{ old('r6') }}" @endif
                                                 step=".01" min="0">
                                             @error('r6')
                                                 <div class="invalid-feedback">
@@ -100,7 +105,7 @@
                                             <input type="number"
                                                 class="form-control @error('r7') is-invalid  @enderror @if (Session::has('error1')) is-invalid @endif"
                                                 id="r7" name="r7"
-                                                @if ($sbsNow != null) value="{{ old('r7', $sbsNow->r7) }}" @else  value="{{ old('r7', 0.0) }}" @endif
+                                                @if ($sbsNow != null) value="{{ old('r7', $sbsNow->r7) }}" @else  value="{{ old('r7') }}" @endif
                                                 step=".01" min="0">
                                             @error('r7')
                                                 <div class="invalid-feedback">
@@ -116,11 +121,11 @@
                                     @endif
                                     <hr>
                                     {{-- @if ($sbsLast != null) --}}
-                                    <span class=" text-info">Note: Total nilai R5, R6, dan R7 harus kurang
+                                    {{-- <span class=" text-info">Note: Total nilai R5, R6, dan R7 harus kurang
                                         dari/sama dengan
-                                        {{ $sbsLast->r9 }} ({{ $tanaman->satuan_luas }}) </span>
+                                        {{ $sbsLast->r9 }} ({{ $tanaman->satuan_luas }}) </span> --}}
                                     {{-- @else --}}
-                                    {{-- <span class="text-center text-info" id="result"></span> --}}
+                                    <span class="text-center text-info" id="result"></span>
                                     {{-- @endif --}}
                                 @else
                                     <div class="col-lg-6">
@@ -130,7 +135,7 @@
                                             <input type="number"
                                                 class="form-control @error('r5') is-invalid  @enderror @if (Session::has('error1')) is-invalid @endif"
                                                 id="r5" name="r5"
-                                                @if ($sbsNow != null) value="{{ old('r5', $sbsNow->r5) }}" @else  value="{{ old('r5', 0.0) }}" @endif
+                                                @if ($sbsNow != null) value="{{ old('r5', $sbsNow->r5) }}" @else  value="{{ old('r5') }}" @endif
                                                 step=".01" min="0">
                                             @error('r5')
                                                 <div class="invalid-feedback">
@@ -148,7 +153,7 @@
                                             <input type="number"
                                                 class="form-control @error('r7') is-invalid  @enderror @if (Session::has('error1')) is-invalid @endif"
                                                 id="r7" name="r7"
-                                                @if ($sbsNow != null) value="{{ old('r7', $sbsNow->r7) }}" @else  value="{{ old('r7', 0.0) }}" @endif
+                                                @if ($sbsNow != null) value="{{ old('r7', $sbsNow->r7) }}" @else  value="{{ old('r7') }}" @endif
                                                 step=".01" min="0">
                                             @error('r7')
                                                 <div class="invalid-feedback">
@@ -173,7 +178,7 @@
                                         </label>
                                         <input type="number" class="form-control @error('r8') is-invalid  @enderror"
                                             id="r8" name="r8"
-                                            @if ($sbsNow != null) value="{{ old('r8', $sbsNow->r8) }}" @else  value="{{ old('r8', 0.0) }}" @endif
+                                            @if ($sbsNow != null) value="{{ old('r8', $sbsNow->r8) }}" @else  value="{{ old('r8') }}" @endif
                                             step=".01" min="0">
                                         @error('r8')
                                             <div class="invalid-feedback">

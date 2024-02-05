@@ -3,7 +3,7 @@
     <!-- Brand Logo -->
     <a href="index3.html" class="brand-link">
         {{-- <img src="{{ asset('img') }}/bps-logo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"> --}}
-        <span class="brand-text font-weight-bold">SI-Dara</span>
+        <span class="brand-text font-weight-bold">SI-Dara Linggau</span>
     </a>
 
     <!-- Sidebar -->

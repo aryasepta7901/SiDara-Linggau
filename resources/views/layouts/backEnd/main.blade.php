@@ -227,7 +227,7 @@
             }
         });
     </script>
-    {{-- <script>
+    <script>
         $(document).ready(function() {
             // Mendapatkan nilai awal dari input #r4
             var initialValue = $('#r4').val();
@@ -256,7 +256,7 @@
                 $('#result').html('');
             }
         });
-    </script> --}}
+    </script>
 
     {{-- <script>
         function showHideInput1() {

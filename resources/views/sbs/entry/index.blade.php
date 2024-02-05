@@ -108,7 +108,7 @@
         </div>
         <div class="card">
             <div class="card-header">
-                <b>Kecamatan {{ $kecamatan->kecamatan }}</b>
+                <b>Kecamatan {{ $kecamatan->kecamatan }} ({{ $TextBulan }})</b>
                 <div class="d-flex justify-content-end">
 
                     {{-- @if ($totalEntryNow1 === $totalEntryLast && $totalEntryLast !== 0) --}}

@@ -76,6 +76,7 @@ class EntrySBSController extends Controller
             'tahunNow' => $tahunNow,
             'bulanLalu' => $bulanLalu,
             'tahunLalu' => $tahunLalu,
+            'TextBulan' => Carbon::parse($bulanTahun)->isoFormat('MMMM YYYY', 'id'),
 
         ]);
     }
@@ -113,7 +114,7 @@ class EntrySBSController extends Controller
         if ($request->submit1) {
             $request->validate(
                 [
-                    'r4' => 'required',
+                    'r4' => 'required|gt:0',
                     'r5'  => 'required|lte:r4',
                     'r6'  => 'required|lte:r4',
                     'r7'  => 'required|lte:r4',
@@ -123,6 +124,7 @@ class EntrySBSController extends Controller
                 [
                     'required' => ':attribute Wajib di Isi',
                     'lte' => ' :attribute Harus lebih kecil atau sama dengan  dari :value.',
+                    'gt' => ' :attribute tidak boleh :value.',
                 ]
             );
 
@@ -271,11 +273,12 @@ class EntrySBSController extends Controller
         if ($request->submit3) {
             $request->validate(
                 [
-                    'r8' => 'required',
+                    'r8' => 'required|gt:0',
                     'note' => 'required',
                 ],
                 [
                     'required' => ':attribute Wajib di Isi',
+                    'gt' => ' :attribute tidak boleh :value.',
                 ]
             );
             // entry3
@@ -473,6 +476,7 @@ class EntrySBSController extends Controller
             'sbsNow' => SBS::where('tanaman_id', $entry->id)->where('entry_id', $id)->first(),
             'entryNow' => $entryNow,
             'tanaman' => Tanaman::where('id', $entry->id)->first(),
+            'bulanNow' => $bulanNow,
 
         ]);
     }
