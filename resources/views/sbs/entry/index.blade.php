@@ -171,9 +171,32 @@
                                             </div>
                                             <div class="col-md-9">
                                                 <div class="card-body">
-                                                    <h5 class="card-title"><a
-                                                            href="{{ url('/entry/pertLuas/' . $value->id) }}">{{ $value->nama_tanaman }}</a>
+                                                    <h5 class="card-title">
+                                                        @if ($entryNow != null)
+                                                            @php
+                                                                $sbs = App\Models\SBS::where('entry_id', $entryNow->id)
+                                                                    ->where('tanaman_id', $value->id)
+                                                                    ->first();
 
+                                                            @endphp
+                                                            @if ($sbs != null && $sbs->status == 0)
+                                                                <form method="post" action="{{ url('/entry/reset') }}">
+                                                                    @csrf
+                                                                    <input type="hidden" name="tanaman_id"
+                                                                        value="{{ $sbs->tanaman_id }}">
+                                                                    <input type="hidden" name="entry_id"
+                                                                        value="{{ $sbs->entry_id }}">
+                                                                    <button class="plain-button"
+                                                                        type="submit">{{ $value->nama_tanaman }}</button>
+                                                                </form>
+                                                            @else
+                                                                <a
+                                                                    href="{{ url('/entry/pertLuas/' . $value->id) }}">{{ $value->nama_tanaman }}</a>
+                                                            @endif
+                                                        @else
+                                                            <a
+                                                                href="{{ url('/entry/pertLuas/' . $value->id) }}">{{ $value->nama_tanaman }}</a>
+                                                        @endif
                                                     </h5>
                                                     {{-- <p class="card-text">This is a wider card with supporting text below as a natural
                                                     lead-in to additional content. This content is a little bit longer.</p> --}}
@@ -228,8 +251,8 @@
                                                                                     class="fas fa-trash"></i></button>
                                                                         @endif
                                                                     @else
-                                                                        <small class="badge badge-info"><i
-                                                                                class="fas fa-spinner"></i></small>
+                                                                        <small class="badge badge-danger"><i
+                                                                                class="fas fa-times"></i></small>
                                                                     @endif
                                                                 @else
                                                                     @if ($sbsLast->status_tanaman == 2)

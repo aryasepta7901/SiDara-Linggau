@@ -24,8 +24,11 @@
                                     ({{ $tanaman->satuan_luas }}) </label>
                                 <input type="number" class="form-control @error('r8') is-invalid  @enderror" id="r8"
                                     name="r8"
-                                    @if ($sbsNow != null) value="{{ old('r8', $sbsNow->r8) }}" @else  value="{{ old('r8') }}" @endif
-                                    step=".01" min="0">
+                                    @if ($sbsNow != null) value="{{ old('r8', $sbsNow->r8) }}" @endif
+                                    step=".01" min="0"
+                                    @if ($entryNow != null && $sbsNow != null) @if ($sbsNow->status == 2 || $sbsNow->status == 4 || $sbsNow->status == 6) readonly @endif
+                                    @endif
+                                >
                                 @error('r8')
                                     <div class="invalid-feedback">
                                         {{ $message }}
@@ -38,7 +41,10 @@
                                 <label for="note">r13: Keterangan</label>
                                 <input type="text" class="form-control @error('note') is-invalid  @enderror"
                                     id="note" name="note"
-                                    @if ($sbsNow != null) value="{{ old('note', $sbsNow->note) }}" @else  value="{{ old('note') }}" @endif>
+                                    @if ($sbsNow != null) value="{{ old('note', $sbsNow->note) }}" @else  value="{{ old('note') }}" @endif
+                                    @if ($entryNow != null && $sbsNow != null) @if ($sbsNow->status == 2 || $sbsNow->status == 4 || $sbsNow->status == 6) readonly @endif
+                                    @endif
+                                >
                                 @error('note')
                                     <div class="invalid-feedback">
                                         {{ $message }}
@@ -55,7 +61,10 @@
                                     name="r4" id="r4"
                                     @if ($sbsLast != null && $bulanNow == 1 && $sbsNow == null) value="{{ $sbsLast->r9 }}"  
                                     @elseif($sbsNow != null && $bulanNow == 1) value="{{ $sbsNow->r4 }}" 
-                                    @elseif($sbsLast != null)  value="{{ $sbsLast->r9 }}" readonly @endif>
+                                    @elseif($sbsLast != null)  value="{{ $sbsLast->r9 }}" readonly @endif
+                                    step=".01" min="0"
+                                    @if ($entryNow != null && $sbsNow != null) @if ($sbsNow->status == 2 || $sbsNow->status == 4 || $sbsNow->status == 6) readonly @endif
+                                    @endif>
                                 @error('r4')
                                     <div class="invalid-feedback">
                                         {{ $message }}
@@ -74,7 +83,9 @@
                                                 class="form-control @error('r5') is-invalid  @enderror @if (Session::has('error1')) is-invalid @endif"
                                                 id="r5" name="r5"
                                                 @if ($sbsNow != null) value="{{ old('r5', $sbsNow->r5) }}" @else  value="{{ old('r5') }}" @endif
-                                                step=".01" min="0">
+                                                step=".01" min="0"
+                                                @if ($entryNow != null && $sbsNow != null) @if ($sbsNow->status == 2 || $sbsNow->status == 4 || $sbsNow->status == 6) readonly @endif
+                                                @endif>
                                             @error('r5')
                                                 <div class="invalid-feedback">
                                                     {{ $message }}
@@ -86,11 +97,12 @@
                                         <div class="form-group">
                                             <label for="input2">R6: Luas Panen Belum Habis
                                                 ({{ $tanaman->satuan_luas }})</label>
-                                            <input type="number" id="input2"
-                                                oninput="showHideInput2()"class="form-control @error('r6') is-invalid  @enderror @if (Session::has('error1')) is-invalid @endif"
-                                                id="r6" name="r6"
+                                            <input type="number" id="input2" oninput="showHideInput2()"
+                                                class="form-control @error('r6') is-invalid  @enderror @if (Session::has('error1')) is-invalid @endif"
                                                 @if ($sbsNow != null) value="{{ old('r6', $sbsNow->r6) }}" @else  value="{{ old('r6') }}" @endif
-                                                step=".01" min="0">
+                                                id="r6" name="r6" undefined step=".01" min="0"
+                                                @if ($entryNow != null && $sbsNow != null) @if ($sbsNow->status == 2 || $sbsNow->status == 4 || $sbsNow->status == 6) readonly @endif
+                                                @endif>
                                             @error('r6')
                                                 <div class="invalid-feedback">
                                                     {{ $message }}
@@ -104,9 +116,10 @@
                                                 ({{ $tanaman->satuan_luas }})</label>
                                             <input type="number"
                                                 class="form-control @error('r7') is-invalid  @enderror @if (Session::has('error1')) is-invalid @endif"
-                                                id="r7" name="r7"
-                                                @if ($sbsNow != null) value="{{ old('r7', $sbsNow->r7) }}" @else  value="{{ old('r7') }}" @endif
-                                                step=".01" min="0">
+                                                @if ($sbsNow != null) value="{{ old('r7', $sbsNow->r7) }}" @else value="{{ old('r7') }}" @endif
+                                                id="r7" name="r7" undefined step=".01" min="0"
+                                                @if ($entryNow != null && $sbsNow != null) @if ($sbsNow->status == 2 || $sbsNow->status == 4 || $sbsNow->status == 6) readonly @endif
+                                                @endif>
                                             @error('r7')
                                                 <div class="invalid-feedback">
                                                     {{ $message }}
@@ -128,33 +141,35 @@
                                     <span class="text-center text-info" id="result"></span>
                                     {{-- @endif --}}
                                 @else
+                                    <input type="hidden" value="0" name="r6">
                                     <div class="col-lg-6">
                                         <div class="form-group">
-                                            <label for="pekerjaan">R5: Luas Panen Habis/Dibongkar
+                                            <label for="input1">R5: Luas Panen Habis/Dibongkar
                                                 ({{ $tanaman->satuan_luas }})</label>
-                                            <input type="number"
+                                            <input type="number" id="input1" oninput="showHideInput1()"
                                                 class="form-control @error('r5') is-invalid  @enderror @if (Session::has('error1')) is-invalid @endif"
                                                 id="r5" name="r5"
                                                 @if ($sbsNow != null) value="{{ old('r5', $sbsNow->r5) }}" @else  value="{{ old('r5') }}" @endif
-                                                step=".01" min="0">
+                                                step=".01" min="0"
+                                                @if ($entryNow != null && $sbsNow != null) @if ($sbsNow->status == 2 || $sbsNow->status == 4 || $sbsNow->status == 6) readonly @endif
+                                                @endif>
                                             @error('r5')
                                                 <div class="invalid-feedback">
                                                     {{ $message }}
                                                 </div>
                                             @enderror
-                                            <input type="hidden" value="0" name="r6">
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="form-group">
                                             <label for="pekerjaan">R7: Luas Rusak / Tidak Berhasil / Puso
-                                                ({{ $tanaman->satuan_luas }})
-                                            </label>
+                                                ({{ $tanaman->satuan_luas }})</label>
                                             <input type="number"
                                                 class="form-control @error('r7') is-invalid  @enderror @if (Session::has('error1')) is-invalid @endif"
-                                                id="r7" name="r7"
-                                                @if ($sbsNow != null) value="{{ old('r7', $sbsNow->r7) }}" @else  value="{{ old('r7') }}" @endif
-                                                step=".01" min="0">
+                                                @if ($sbsNow != null) value="{{ old('r7', $sbsNow->r7) }}" @else value="{{ old('r7') }}" @endif
+                                                id="r7" name="r7" undefined step=".01" min="0"
+                                                @if ($entryNow != null && $sbsNow != null) @if ($sbsNow->status == 2 || $sbsNow->status == 4 || $sbsNow->status == 6) readonly @endif
+                                                @endif>
                                             @error('r7')
                                                 <div class="invalid-feedback">
                                                     {{ $message }}
@@ -167,9 +182,9 @@
                                             {{ Session::get('error1') }}
                                         </span>
                                     @endif
-                                    <span class=" text-info">Note: Total nilai R5 dan R7 harus kurang
-                                        dari/sama dengan
-                                        {{ $sbsLast->r9 }} ({{ $tanaman->satuan_luas }}) </span>
+                                    <hr>
+                                    <span class="text-center text-info" id="result"></span>
+
                                 @endif
                                 <div class="col-lg-12">
                                     <div class="form-group">
@@ -179,7 +194,9 @@
                                         <input type="number" class="form-control @error('r8') is-invalid  @enderror"
                                             id="r8" name="r8"
                                             @if ($sbsNow != null) value="{{ old('r8', $sbsNow->r8) }}" @else  value="{{ old('r8') }}" @endif
-                                            step=".01" min="0">
+                                            step=".01" min="0"
+                                            @if ($entryNow != null && $sbsNow != null) @if ($sbsNow->status == 2 || $sbsNow->status == 4 || $sbsNow->status == 6) readonly @endif
+                                            @endif>
                                         @error('r8')
                                             <div class="invalid-feedback">
                                                 {{ $message }}
@@ -189,8 +206,9 @@
                                 </div>
                             </div>
                             <hr>
-                            @if ($entryNow != null)
-                                @if ($entryNow->status == 2 || $entryNow->status == 4 || $entryNow->status == 6)
+
+                            @if ($entryNow != null && $sbsNow != null)
+                                @if ($sbsNow->status == 2 || $sbsNow->status == 4 || $sbsNow->status == 6)
                                     {{-- Readonly --}}
                                     <p class="text-center text-bold my-3">Produksi (Kuintal)</p>
                                     <div class="row">
@@ -205,7 +223,7 @@
                                                             class="form-control @error('r10') is-invalid  @enderror"
                                                             id="r10" name="r10"
                                                             value="{{ old('r10', $sbsNow->r10) }}" step=".01"
-                                                            min="0">
+                                                            min="0" readonly>
                                                     </div>
                                                 </div>
                                             @endif
@@ -218,7 +236,7 @@
                                                             class="form-control @error('r11') is-invalid  @enderror"
                                                             id="r11" name="r11"
                                                             value="{{ old('r11', $sbsNow->r11) }}" step=".01"
-                                                            min="0">
+                                                            min="0" readonly>
                                                     </div>
                                                 </div>
                                             @endif
@@ -229,7 +247,7 @@
                                                     <input
                                                         type="number"class="form-control @error('r10') is-invalid  @enderror"
                                                         name="r10" value="{{ old('r10', $sbsNow->r10) }}"
-                                                        step=".01" min="0">
+                                                        step=".01" min="0" readonly>
                                                 </div>
                                             </div>
                                         @endif
@@ -239,8 +257,8 @@
                                                 <label for="r12">R12: Harga Jual Petani Per Kilogram (Rupiah)</label>
                                                 <input type="number"
                                                     class="form-control @error('r12') is-invalid  @enderror"
-                                                    id="r12" name="r12"
-                                                    value="{{ old('r12', $sbsNow->r12) }}">
+                                                    id="r12" name="r12" value="{{ old('r12', $sbsNow->r12) }}"
+                                                    readonly>
                                             </div>
                                         </div>
                                         <div class="col-md-6">
@@ -249,7 +267,7 @@
                                                 <input type="text"
                                                     class="form-control @error('note') is-invalid  @enderror"
                                                     id="note" name="note"
-                                                    value="{{ old('note', $sbsNow->note) }}">
+                                                    value="{{ old('note', $sbsNow->note) }}" readonly>
                                             </div>
                                         </div>
                                     </div>
@@ -262,8 +280,8 @@
 
                             <a type="button" href="{{ url('/entry') }}" class="btn btn-default"
                                 data-dismiss="modal">Close</a>
-                            @if ($entryNow != null)
-                                @if ($entryNow->status != 2 && $entryNow->status != 4 && $entryNow->status != 6)
+                            @if ($entryNow != null && $sbsNow != null)
+                                @if ($sbsNow->status != 2 && $sbsNow->status != 4 && $sbsNow->status != 6)
                                     <button type="submit" name="submit3" value="submit3"
                                         class="btn btn-primary">Simpan</button>
                                 @endif
@@ -276,8 +294,8 @@
                         <div class="modal-footer justify-content-between">
                             <a type="button" href="{{ url('/entry') }}" class="btn btn-default"
                                 data-dismiss="modal">Close</a>
-                            @if ($entryNow != null)
-                                @if ($entryNow->status != 2 && $entryNow->status != 4 && $entryNow->status != 6)
+                            @if ($entryNow != null && $sbsNow != null)
+                                @if ($sbsNow->status != 2 && $sbsNow->status != 4 && $sbsNow->status != 6)
                                     <button type="submit" name="submit1" value="submit1"
                                         class="btn btn-primary">Selanjutnya</button>
                                 @endif

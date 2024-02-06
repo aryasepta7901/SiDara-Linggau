@@ -59,20 +59,22 @@
                                     </div>
                                 @endif
                             @else
-                                <div class="col-lg-12">
-                                    <div class="form-group">
-                                        <label for="pekerjaan">R10: Produksi Dipanen Habis/Dibongkar</label>
-                                        <input type="number"class="form-control @error('r10') is-invalid  @enderror"
-                                            name="r10"
-                                            @if ($sbsNow->r10 != 0) value="{{ old('r10', $sbsNow->r10) }}" @else  value="{{ old('r10') }}" @endif
-                                            step=".01" min="0">
-                                        @error('r10')
-                                            <div class="invalid-feedback">
-                                                {{ $message }}
-                                            </div>
-                                        @enderror
+                                @if ($sbsNow->r5 != 0)
+                                    <div class="col-lg-12">
+                                        <div class="form-group">
+                                            <label for="pekerjaan">R10: Produksi Dipanen Habis/Dibongkar</label>
+                                            <input type="number"class="form-control @error('r10') is-invalid  @enderror"
+                                                name="r10"
+                                                @if ($sbsNow->r10 != 0) value="{{ old('r10', $sbsNow->r10) }}" @else  value="{{ old('r10') }}" @endif
+                                                step=".01" min="0">
+                                            @error('r10')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
+                                        </div>
                                     </div>
-                                </div>
+                                @endif
                             @endif
                             {{-- <p>{{ $tanaman->min_produktivitas }} -{{ $tanaman->max_produktivitas }}</p> --}}
 

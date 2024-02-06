@@ -38,6 +38,7 @@ Route::get('logout', [LoginController::class, 'logout'])->name('logout');
 // Entry
 Route::resource('/entry', EntrySBSController::class)->middleware('auth');
 Route::post('/entry/storeMonthYearSelection', [EntrySBSController::class, 'storeMonthYearSelection'])->middleware('auth');
+Route::post('/entry/reset', [EntrySBSController::class, 'reset'])->middleware('auth');
 Route::get('/entry/pertLuas/{entry}', [EntrySBSController::class, 'pertLuas'])->middleware('auth');
 Route::get('/entry/pertProd/{entry}', [EntrySBSController::class, 'pertProd'])->middleware('auth');
 

@@ -118,17 +118,19 @@ class EntrySBSController extends Controller
                     'r5'  => 'required|lte:r4',
                     'r6'  => 'required|lte:r4',
                     'r7'  => 'required|lte:r4',
-                    'r8' => 'required',
+                    'r8' => 'required|max:4',
 
                 ],
                 [
                     'required' => ':attribute Wajib di Isi',
                     'lte' => ' :attribute Harus lebih kecil atau sama dengan  dari :value.',
                     'gt' => ' :attribute tidak boleh :value.',
+                    'max' => ':attribute Maksimal :max. Karakter'
                 ]
             );
 
             if ($request->r5 + $request->r6 + $request->r7 > $request->r4) {
+
                 // Gunakan session untuk menyimpan pesan kesalahan
                 $tanaman = Tanaman::where('id', $request->tanaman_id)->first();
                 if ($tanaman->belum_habis == 0) {
@@ -183,7 +185,7 @@ class EntrySBSController extends Controller
                         'r7' => $request->r7,
                         'r8' => $request->r8,
                         'r9' => $total,
-                        'status' => 0,
+                        // 'status' => 0,
                         'status_tanaman' => $status_tanaman,
                         'entry_id' => $data->id,
                         'tanaman_id' => $request->tanaman_id,
@@ -431,6 +433,12 @@ class EntrySBSController extends Controller
             'tanaman' => Tanaman::where('jenis_sph', 'SBS')->orderBy('urut_kues', 'asc')->get(),
         ]);
     }
+
+    public function reset(Request $request)
+    {
+        SBS::where('tanaman_id', $request->tanaman_id)->where('entry_id', $request->entry_id)->delete();
+        return redirect('/entry/pertLuas/' . $request->tanaman_id);
+    }
     public function pertLuas(Tanaman $entry)
     {
         $this->authorize('pcl');
@@ -469,11 +477,11 @@ class EntrySBSController extends Controller
         } else {
             $id = $entryNow->id;
         }
-
+        $sbsNow = SBS::where('tanaman_id', $entry->id)->where('entry_id', $id)->first();
         return view('sbs.entry.show1', [
             'title' => 'Tanaman ' . $entry->nama_tanaman,
             'sbsLast' => SBS::where('tanaman_id', $entry->id)->where('entry_id', $entryLast->id)->first(),
-            'sbsNow' => SBS::where('tanaman_id', $entry->id)->where('entry_id', $id)->first(),
+            'sbsNow' => $sbsNow,
             'entryNow' => $entryNow,
             'tanaman' => Tanaman::where('id', $entry->id)->first(),
             'bulanNow' => $bulanNow,
