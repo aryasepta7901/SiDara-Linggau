@@ -129,19 +129,7 @@ class EntrySBSController extends Controller
                 ]
             );
 
-            if ($request->r5 + $request->r6 + $request->r7 > $request->r4) {
-
-                // Gunakan session untuk menyimpan pesan kesalahan
-                $tanaman = Tanaman::where('id', $request->tanaman_id)->first();
-                if ($tanaman->belum_habis == 0) {
-                    Session::flash('error1', 'Terdapat Kesalahan: Total Nilai R5 dan R7 berjumlah ' . $request->r5 + $request->r6 + $request->r7);
-                } else {
-                    Session::flash('error1', 'Terdapat Kesalahan: Total Nilai R5 R6 dan R7 berjumlah ' . $request->r5 + $request->r6 + $request->r7);
-                }
-
-                // Redirect kembali
-                return back()->withInput()->withErrors('');
-            } else {
+            if ($request->r5 + $request->r6 + $request->r7 <= $request->r4) {
                 $selectedMonth = Session::get('selectedMonth');
                 $selectedYear = Session::get('selectedYear');
                 if ($selectedMonth != null || $selectedYear != null) {
@@ -193,6 +181,16 @@ class EntrySBSController extends Controller
                     ]
                 );
                 return redirect('/entry/pertProd/' . $request->tanaman_id);
+            } else {
+                // Gunakan session untuk menyimpan pesan kesalahan
+                $tanaman = Tanaman::where('id', $request->tanaman_id)->first();
+                if ($tanaman->belum_habis == 0) {
+                    Session::flash('error1', 'Terdapat Kesalahan: Total Nilai R5 dan R7 berjumlah ' . $request->r5 + $request->r6 + $request->r7);
+                } else {
+                    Session::flash('error1', 'Terdapat Kesalahan: Total Nilai R5 R6 dan R7 berjumlah ' . $request->r5 + $request->r6 + $request->r7);
+                }
+                // Redirect kembali
+                return back()->withInput()->withErrors('');
             }
         }
         if ($request->submit2) {

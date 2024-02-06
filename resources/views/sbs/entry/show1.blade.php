@@ -59,8 +59,8 @@
                                     ({{ $tanaman->satuan_luas }})</label>
                                 <input type="number" class="form-control  @error('r4') is-invalid  @enderror"
                                     name="r4" id="r4"
-                                    @if ($sbsLast != null && $bulanNow == 1 && $sbsNow == null) value="{{ $sbsLast->r9 }}"  
-                                    @elseif($sbsNow != null && $bulanNow == 1) value="{{ $sbsNow->r4 }}" 
+                                    @if ($sbsLast != null && $bulanNow == 1 && $sbsNow == null) value="{{ old('r4', $sbsLast->r9) }}"  
+                                    @elseif($sbsNow != null && $bulanNow == 1) value="{{ old('r4', $sbsNow->r4) }}" 
                                     @elseif($sbsLast != null)  value="{{ $sbsLast->r9 }}" readonly @endif
                                     step=".01" min="0"
                                     @if ($entryNow != null && $sbsNow != null) @if ($sbsNow->status == 2 || $sbsNow->status == 4 || $sbsNow->status == 6) readonly @endif

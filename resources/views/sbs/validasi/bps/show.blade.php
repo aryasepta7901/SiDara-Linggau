@@ -25,7 +25,12 @@
     <div class="col-lg-12">
 
         <div class="card">
-            <div class="card-header d-flex justify-content-between">
+            <div class="card-header d-flex justify-content-end">
+                @if ($entryNow->status == 6)
+                    <button class="btn btn-primary ml-2" data-toggle="modal" data-target="#tambah"><i class="fa fa-plus">
+                        </i> </button>
+                @endif
+
                 {{-- <table class="table table-head-fixed text-nowrap">
                     <thead>
                         <tr>
@@ -99,10 +104,11 @@
             <div class="card-body ">
                 <form method="post" action="{{ url('/validasi/bps') }}">
                     @csrf
-                    {{-- @if ($entryNow->status == 4) --}}
-                    <button type="submit" class="btn btn-sm btn-info ml-auto"><i class="fas fa-paper-plane">
-                        </i> Kirim</button>
-                    {{-- @endif --}}
+                    @if ($entryNow->status == 4 || $entryNow->status == 6)
+                        <button type="submit" name="kirimValidasi" value="kirimValidasi"
+                            class="btn btn-sm btn-info ml-auto"><i class="fas fa-paper-plane">
+                            </i> Kirim</button>
+                    @endif
                     <div class="custom-scroll" id="scrollTable">
                         <table id="example2" id="data-table" class="table  table-bordered table-striped table-responsive">
                             <thead class="sticky-header">
@@ -120,6 +126,7 @@
                                     <th rowspan="2">Keterangan</th>
                                     <th rowspan="2">Validasi</th>
                                     <th rowspan="2">Komentar</th>
+                                    <th rowspan="2">Action</th>
 
                                 </tr>
                                 <tr>
@@ -148,7 +155,6 @@
 
                             </thead>
                             <tbody>
-
                                 @foreach ($tanaman as $value)
                                     @php
                                         $sbs = App\Models\SBS::where('tanaman_id', $value->id)
@@ -201,6 +207,14 @@
                                                     @if ($sbs->status == 3 || $sbs->status == 2 || $sbs->status == 4 || $sbs->status == 5) value="{{ $sbs->catatan_BPS }}" @endif>
                                             </td>
                                             <input type="hidden" name="tanaman_id[]" value="{{ $value->id }}">
+
+                                            <td>
+                                                @if ($sbs->r4 == 0)
+                                                    <button type="button" class="badge badge-danger badge-sm"
+                                                        data-toggle="modal" data-target="#delete{{ $sbs->tanaman_id }}"><i
+                                                            class="fas fa-trash"></i></button>
+                                                @endif
+                                            </td>
                                         @else
                                             <td></td>
                                             <td></td>
@@ -230,6 +244,7 @@
                                             </td>
                                             <td><input type="text" name="catatanBPS{{ $value->id }}">
                                             </td>
+                                            <td></td>
                                         @endif
                                         <!-- Menyertakan input tanaman_ids -->
                                         <input type="hidden" name="tanaman_id[]" value="{{ $value->id }}">
@@ -251,6 +266,93 @@
         <!-- /.card -->
 
     </div>
+
+    {{-- Modal --}}
+    {{-- Tambah --}}
+    <div class="modal fade" id="tambah">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Tambah Tanaman</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form method="post"action="{{ url('/validasi/bps') }}">
+                    @csrf
+                    <div class="modal-body">
+                        <table id="example1" class="table table-bordered table-striped ">
+                            <thead>
+                                <tr>
+                                    <th>Nama Tanaman</th>
+                                    <th>Tanaman Baru (r8)</th>
+                                    <th>Tambah</th>
+                                </tr>
+
+                            </thead>
+                            <tbody>
+
+                                @foreach ($allTanaman as $value)
+                                    <tr>
+                                        <td>{{ $value->nama_tanaman }}</td>
+                                        </td>
+                                        <input type="hidden" name="entry_id" value="{{ $entryNow->id }}">
+                                        <td><input type="number" name="r8" step=".01" min="0">
+                                        </td>
+                                        <td class="text-center">
+                                            {{-- <a href="" class="btn btn-sm btn-primary"><i class="fas fa-eye"></i></a> --}}
+                                            <button type="submit" name="Btntanaman_id" value="{{ $value->id }}"
+                                                class="btn btn-sm btn-info ml-auto"><i class="fa fa-plus">
+                                                </i></button>
+                                        </td>
+                                    </tr>
+                                @endforeach
+
+                            </tbody>
+                        </table>
+                    </div>
+                </form>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    {{-- Delete --}}
+    @foreach ($tanaman as $value)
+        <div class="modal fade" id="delete{{ $value->id }}">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Hapus Data Tanaman</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <form method="post" action="{{ url('/validasi/bps/' . $value->id) }}">
+                        @method('delete')
+                        @csrf
+                        <div class="modal-body">
+                            {{-- <input type="hidden" value="{{ $bulanLalu }}" name="bulanLalu">
+                            <input type="hidden" value="{{ $tahunLalu }}" name="tahunLalu">
+                            <input type="hidden" value="{{ $bulanNow }}" name="bulanNow">
+                            <input type="hidden" value="{{ $tahunNow }}" name="tahunNow"> --}}
+
+                            <input type="hidden" name="entry_id" value="{{ $entryNow->id }}">
+                            <input type="hidden" name="tanaman_id" value="{{ $value->id }}">
+                            Apakah Anda Yakin ingin menghapus data Tanaman <b> {{ $value->nama_tanaman }}</b>
+                        </div>
+
+                        <div class="modal-footer justify-content-between">
+                            <a type="button" class="btn btn-default" data-dismiss="modal">Close</a>
+                            <button type="submit" name="submit3" value="submit3" class="btn btn-primary">Hapus</button>
+                        </div>
+                    </form>
+                </div>
+                <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+        </div>
+    @endforeach
 
 
 

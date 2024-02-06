@@ -76,20 +76,9 @@ class ValidasiSBSController extends Controller
      */
     public function store(Request $request)
     {
-        // Mendapatkan data dari radio button dengan nama dinamis
-        $tanamanIds = $request->input('tanaman_id');
-        $data = EntrySBS::updateOrCreate(
-            [
-                'bulan' =>  $request->bulan,
-                'tahun' => $request->tahun,
-                'kec_id' => $request->kec_id,
-            ]
-        );
-        EntrySBS::where('id', $data->id)->update(['status' => 6]);
-
-
-        foreach ($tanamanIds as $tanamanId) {
-            $validasiValue = $request->input('validasi' . $tanamanId);
+        if ($request->kirimValidasi) {
+            // Mendapatkan data dari radio button dengan nama dinamis
+            $tanamanIds = $request->input('tanaman_id');
             $data = EntrySBS::updateOrCreate(
                 [
                     'bulan' =>  $request->bulan,
@@ -97,30 +86,82 @@ class ValidasiSBSController extends Controller
                     'kec_id' => $request->kec_id,
                 ]
             );
-            SBS::where('tanaman_id', $tanamanId)->where('entry_id', $data->id)->update(['status' => $validasiValue]);
-            // }
-            if ($validasiValue == 5) { //jika ada yang direvisi 
-                $catatanBPS = $request->input('catatanBPS' . $tanamanId);
+            EntrySBS::where('id', $data->id)->update(['status' => 6]);
 
-                SBS::where('tanaman_id', $tanamanId)->where('entry_id', $data->id)->update(
-                    [
-                        'catatan_bps' => $catatanBPS,
-                    ]
-                );
-                $data->update(['status' => 5]); //update entrySBS
-            } elseif ($validasiValue == 2) {  //jika ada tanaman baru
-                $data->update(['status' => 5]); //update entrySBS
-
-                $catatanBPS = $request->input('catatanBPS' . $tanamanId);
-                $bulanLalu =  $request->bulan == 1 ? 12 : $request->bulan - 1;
-                $tahunLalu =  $request->bulan == 1 ? $request->tahun - 1 : $request->tahun;
+            foreach ($tanamanIds as $tanamanId) {
+                $validasiValue = $request->input('validasi' . $tanamanId);
                 $data = EntrySBS::updateOrCreate(
                     [
-                        'bulan' => $bulanLalu,
-                        'tahun' => $tahunLalu,
+                        'bulan' =>  $request->bulan,
+                        'tahun' => $request->tahun,
                         'kec_id' => $request->kec_id,
                     ]
                 );
+                SBS::where('tanaman_id', $tanamanId)->where('entry_id', $data->id)->update(['status' => $validasiValue]);
+                // }
+                if ($validasiValue == 5) { //jika ada yang direvisi 
+                    $catatanBPS = $request->input('catatanBPS' . $tanamanId);
+
+                    SBS::where('tanaman_id', $tanamanId)->where('entry_id', $data->id)->update(
+                        [
+                            'catatan_bps' => $catatanBPS,
+                        ]
+                    );
+                    $data->update(['status' => 5]); //update entrySBS
+                } elseif ($validasiValue == 2) {  //jika ada tanaman baru
+                    $data->update(['status' => 5]); //update entrySBS
+
+                    $catatanBPS = $request->input('catatanBPS' . $tanamanId);
+                    $bulanLalu =  $request->bulan == 1 ? 12 : $request->bulan - 1;
+                    $tahunLalu =  $request->bulan == 1 ? $request->tahun - 1 : $request->tahun;
+                    $data = EntrySBS::updateOrCreate(
+                        [
+                            'bulan' => $bulanLalu,
+                            'tahun' => $tahunLalu,
+                            'kec_id' => $request->kec_id,
+                        ]
+                    );
+                    $data = [
+                        'r4' => 0,
+                        'r5' => 0,
+                        'r6' => 0,
+                        'r7' => 0,
+                        'r8' => 0,
+                        'r9' => 0,
+                        'r10' => 0,
+                        'r11' => 0,
+                        'r12' => 0,
+                        'note' => '',
+                        'tanaman_id' => $tanamanId,
+                        'status' => 6,
+                        'status_tanaman' => 2, //tanaman_baru
+                        'catatan_dinas' => $catatanBPS,
+                        'user_id' => Auth()->user()->id,
+                        'entry_id' => $data->id,
+                    ];
+                    SBS::create($data);
+                }
+            }
+            return redirect('validasi/bps')->with('success', 'Validasi Berhasil di Lakukan');
+        }
+
+        // Tambah
+        if ($request->Btntanaman_id) {
+
+            $entryNow = EntrySBS::where('id', $request->entry_id)->first();
+
+            $bulanLalu = $entryNow->bulan == 1 ? 12 : $entryNow->bulan  - 1;
+            $tahunLalu = $entryNow->bulan  == 1 ? $entryNow->tahun - 1 : $entryNow->tahun;
+            $entryLast = EntrySBS::updateOrCreate(
+                [
+                    'bulan' =>  $bulanLalu,
+                    'tahun' => $tahunLalu,
+                    'kec_id' => $entryNow->kec_id,
+                    // 'user_id' => auth()->user()->id,
+                ]
+            );
+            $sbsLast = SBS::where('tanaman_id', $request->Btntanaman_id)->where('entry_id', $entryLast->id)->first();
+            if ($sbsLast == null) {
                 $data = [
                     'r4' => 0,
                     'r5' => 0,
@@ -132,18 +173,37 @@ class ValidasiSBSController extends Controller
                     'r11' => 0,
                     'r12' => 0,
                     'note' => '',
-                    'tanaman_id' => $tanamanId,
+                    'entry_id' =>  $entryLast->id,
+                    'tanaman_id' => $request->Btntanaman_id,
+                    'user_id' => auth()->user()->id,
                     'status' => 6,
-                    'status_tanaman' => 2, //tanaman_baru
-                    'catatan_dinas' => $catatanBPS,
-                    'user_id' => Auth()->user()->id,
-                    'entry_id' => $data->id,
+                    'status_tanaman' => 2 // tanaman_baru
                 ];
                 SBS::create($data);
+            } else {
+                $sbsLast->update(['status_tanaman' => 2]);
             }
+            // Bulan Sekarang
+            $data = [
+                'r4' => 0,
+                'r5' => 0,
+                'r6' => 0,
+                'r7' => 0,
+                'r8' => $request->r8,
+                'r9' => $request->r8,
+                'r10' => 0,
+                'r11' => 0,
+                'r12' => 0,
+                'note' => '',
+                'entry_id' =>  $entryNow->id,
+                'tanaman_id' => $request->Btntanaman_id,
+                'user_id' => auth()->user()->id,
+                'status' => 6,
+                'status_tanaman' => 0 // tanaman_baru
+            ];
+            SBS::create($data);
         }
-
-        return redirect('validasi/bps')->with('success', 'Validasi Berhasil di Lakukan');
+        return redirect('validasi/bps/' . $request->entry_id)->with('success', 'Tanaman Berhasil ditambahkan');
     }
 
     /**
@@ -157,6 +217,8 @@ class ValidasiSBSController extends Controller
         $this->authorize('bps');
 
         $entrySBS = EntrySBS::where('id', $bp->id)->first();
+        $data = SBS::where('entry_id', $entrySBS->id)->whereNotIn('status_tanaman', [1])->pluck('tanaman_id')->toArray();
+
 
         $bulanTahun = Carbon::createFromDate($entrySBS->tahun, $entrySBS->bulan, 1);
         return view('sbs.validasi.bps.show', [
@@ -166,6 +228,8 @@ class ValidasiSBSController extends Controller
             'kecamatan' => $entrySBS->kec_id,
             'entryNow' => EntrySBS::where('kec_id', $entrySBS->kec_id)->where('bulan', $entrySBS->bulan)->where('tahun', $entrySBS->tahun)->first(),
             'tanaman' => Tanaman::where('jenis_sph', 'SBS')->orderBy('urut_kues', 'asc')->get(),
+            'allTanaman' => Tanaman::whereNotIn('id', $data)->get(),
+
         ]);
     }
 
@@ -198,8 +262,27 @@ class ValidasiSBSController extends Controller
      * @param  \App\Models\Kecamatan  $kecamatan
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Kecamatan $kecamatan)
+    public function destroy(Request $request)
     {
-        //
+        $entryNow = EntrySBS::where('id', $request->entry_id)->first();
+
+        $bulanLalu = $entryNow->bulan == 1 ? 12 : $entryNow->bulan  - 1;
+        $tahunLalu = $entryNow->bulan  == 1 ? $entryNow->tahun - 1 : $entryNow->tahun;
+        $entryLast = EntrySBS::where('kec_id', $entryNow->kec_id)->where('bulan', $bulanLalu)->where('tahun', $tahunLalu)->first();
+
+
+
+        $sbsLast = SBS::where('tanaman_id', $request->tanaman_id)->where('entry_id', $entryLast->id)->first();
+        if ($sbsLast->r4 == 0) {
+            //    Hapus Jika 0
+            $sbsLast->delete();
+        } else {
+            $sbsLast->update(['status_tanaman' => 1]);
+        }
+        if ($entryNow != null) {
+            SBS::where('tanaman_id', $request->tanaman_id)->where('entry_id', $entryNow->id)->delete();
+        }
+        // Kontrak::destroy($kontrak->id);
+        return redirect()->back()->with('success', 'Data Tanaman Berhasil di Hapus');
     }
 }
