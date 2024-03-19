@@ -29,13 +29,22 @@
     <!-- SweetAlert2 -->
     <link rel="stylesheet" href="{{ asset('template') }}/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css">
     <link href="{{ asset('landingPage') }}/img/bps.png" rel="icon">
-
-    {{-- CSS Utama --}}
-    <link rel="stylesheet" href="/css/style.css"> {{-- https://preview.colorlib.com/theme/bac/accordion-03/ --}}
     <!-- jQuery -->
     <script src="{{ asset('template/plugins/jquery/jquery.min.js') }}"></script>
     <link rel="stylesheet" type="text/css"
         href="https://cdn.datatables.net/fixedheader/3.1.2/css/fixedHeader.dataTables.min.css">
+
+
+    <style>
+        .plain-button {
+            background: none;
+            border: none;
+            padding: 0;
+            font: inherit;
+            cursor: pointer;
+            color: #007bff;
+        }
+    </style>
 
 </head>
 

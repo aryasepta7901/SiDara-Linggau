@@ -1,14 +1,7 @@
 :root {
     scroll-behavior: smooth;
   }
-  .plain-button {
-    background: none;
-    border: none;
-    padding: 0;
-    font: inherit;
-    cursor: pointer;
-    color: #007bff;
-}
+ 
 .myaccordion .card,
 .myaccordion .card:last-child .card-header {
 border: none;

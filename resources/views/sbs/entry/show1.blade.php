@@ -210,6 +210,15 @@
                             @if ($entryNow != null && $sbsNow != null)
                                 @if ($sbsNow->status == 2 || $sbsNow->status == 4 || $sbsNow->status == 6)
                                     {{-- Readonly --}}
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <div class="form-group">
+                                                <label for="pekerjaan">R9: Luas Tanaman Akhir Bulan Laporan</label>
+                                                <input class="form-control" type="number" readonly
+                                                    value="{{ $sbsNow->r9 }}">
+                                            </div>
+                                        </div>
+                                    </div>
                                     <p class="text-center text-bold my-3">Produksi (Kuintal)</p>
                                     <div class="row">
                                         @if ($tanaman->belum_habis == 1)

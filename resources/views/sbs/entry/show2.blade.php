@@ -19,6 +19,14 @@
                         <input type="hidden" name="r6" value="{{ $sbsNow->r6 }}">
                         <input type="hidden" name="min_harga" value="{{ $tanaman->min_harga }}">
                         <input type="hidden" name="max_harga" value="{{ $tanaman->max_harga }}">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="form-group">
+                                    <label for="pekerjaan">R9: Luas Tanaman Akhir Bulan Laporan</label>
+                                    <input type="number" class="form-control" readonly value="{{ $sbsNow->r9 }}">
+                                </div>
+                            </div>
+                        </div>
                         @if ($sbsNow->r5 != 0 || $sbsNow->r6 != 0)
                             <p class="text-center text-bold my-3">Produksi (Kuintal)</p>
                         @endif
