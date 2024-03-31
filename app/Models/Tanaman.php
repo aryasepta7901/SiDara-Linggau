@@ -16,4 +16,16 @@ class Tanaman extends Model
     {
         return $this->hasMany(sbs::class, 'tanaman_id');
     }
+    public function tbf()
+    {
+        return $this->hasMany(tbf::class, 'tanaman_id');
+    }
+    public function bst()
+    {
+        return $this->hasMany(bst::class, 'tanaman_id');
+    }
+    public function th()
+    {
+        return $this->hasMany(th::class, 'tanaman_id');
+    }
 }

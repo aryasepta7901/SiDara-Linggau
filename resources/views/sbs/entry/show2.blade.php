@@ -10,7 +10,7 @@
                     </i> </button> --}}
             </div>
             <div class="card-body">
-                <form method="post" action="{{ url('/entry') }}">
+                <form method="post" action="{{ url('/sbsentry') }}">
                     @csrf
                     <div class="modal-body">
                         <input type="hidden" name="tanaman_id" value="{{ $tanaman->id }}">
@@ -117,7 +117,7 @@
                     </div>
 
                     <div class="modal-footer justify-content-between">
-                        <a type="button" href="{{ url('/entry/pertLuas/' . $tanaman->id) }}" class="btn btn-default"
+                        <a type="button" href="{{ url('/sbsentry/pertLuas/' . $tanaman->id) }}" class="btn btn-default"
                             data-dismiss="modal">Sebelumnya</a>
                         <button type="submit" name="submit2" value="submit2" class="btn btn-primary">Simpan</button>
                     </div>

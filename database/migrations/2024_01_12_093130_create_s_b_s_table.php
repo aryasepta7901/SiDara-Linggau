@@ -34,9 +34,9 @@ return new class extends Migration
             $table->boolean('status_tanaman')->default('0'); //0-> tanaman_ada ,1->tanaman habis, 2->tanaman baru
 
 
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            // $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('entry_id')->references('id')->on('EntrySBS')->onDelete('cascade');
-            $table->foreign('tanaman_id')->references('id')->on('tanaman')->onDelete('cascade');
+            // $table->foreign('tanaman_id')->references('id')->on('tanaman')->onDelete('cascade');
 
 
             $table->timestamps();

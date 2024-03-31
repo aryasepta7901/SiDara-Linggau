@@ -16,7 +16,8 @@
                 @endphp
             @elseif($entryNow->status == 3)
                 @php
-                    $text = 'Terdapat revisi dari <b>Admin Dinas</b>. Perhatikan catatan yang diberikan dan lakukan perbaikan. <br> Jika sudah selesai silahkan klik tombol kirim';
+                    $text =
+                        'Terdapat revisi dari <b>Admin Dinas</b>. Perhatikan catatan yang diberikan dan lakukan perbaikan. <br> Jika sudah selesai silahkan klik tombol kirim';
                     $alert = 'warning';
                 @endphp
             @elseif($entryNow->status == 4)
@@ -26,7 +27,8 @@
                 @endphp
             @elseif($entryNow->status == 5)
                 @php
-                    $text = 'Terdapat revisi dari <b>BPS</b>. Perhatikan catatan yang diberikan dan lakukan perbaikan. <br> Jika sudah selesai silahkan klik tombol kirim';
+                    $text =
+                        'Terdapat revisi dari <b>BPS</b>. Perhatikan catatan yang diberikan dan lakukan perbaikan. <br> Jika sudah selesai silahkan klik tombol kirim';
                     $alert = 'warning';
                 @endphp
             @elseif($entryNow->status == 6)
@@ -41,8 +43,8 @@
 
                     @if ($entryNow->status == 2 || $entryNow->status == 4 || $entryNow->status == 6)
                         <hr>
-                        <a href="{{ url('/entry/' . $entryNow->id) }}" class="btn btn-sm btn-info">Lihat Rekapitulasi Data <i
-                                class="fas fa-eye"></i>
+                        <a href="{{ url('/sbsentry/' . $entryNow->id) }}" class="btn btn-sm btn-info">Lihat Rekapitulasi Data
+                            <i class="fas fa-eye"></i>
                         </a>
                     @endif
 
@@ -56,7 +58,7 @@
         @endif
 
         <div class="card">
-            <form method="post" action="{{ url('/entry/storeMonthYearSelection') }}">
+            <form method="post" action="{{ url('/sbsentry/storeMonthYearSelection') }}">
                 <div class="card-body">
                     @csrf
                     <?php
@@ -132,7 +134,7 @@
                             ($sbsNow == $sbsLast && $entryNow->status == 0) ||
                                 ($sbsNow == $sbsLast && $entryNow->status == 3) ||
                                 ($sbsNow == $sbsLast && $entryNow->status == 5))
-                            <form method="post" action="{{ url('/entry') }}">
+                            <form method="post" action="{{ url('/sbsentry') }}">
                                 @csrf
                                 <input type="hidden" name="bulan" value="{{ $bulanNow }}">
                                 <input type="hidden" name="tahun" value="{{ $tahunNow }}">
@@ -180,7 +182,7 @@
 
                                                             @endphp
                                                             @if ($sbs != null && $sbs->status == 0)
-                                                                <form method="post" action="{{ url('/entry/reset') }}">
+                                                                <form method="post" action="{{ url('/sbsentry/reset') }}">
                                                                     @csrf
                                                                     <input type="hidden" name="tanaman_id"
                                                                         value="{{ $sbs->tanaman_id }}">
@@ -191,25 +193,31 @@
                                                                 </form>
                                                             @else
                                                                 <a
-                                                                    href="{{ url('/entry/pertLuas/' . $value->id) }}">{{ $value->nama_tanaman }}</a>
+                                                                    href="{{ url('/sbsentry/pertLuas/' . $value->id) }}">{{ $value->nama_tanaman }}</a>
                                                             @endif
                                                         @else
                                                             <a
-                                                                href="{{ url('/entry/pertLuas/' . $value->id) }}">{{ $value->nama_tanaman }}</a>
+                                                                href="{{ url('/sbsentry/pertLuas/' . $value->id) }}">{{ $value->nama_tanaman }}</a>
                                                         @endif
                                                     </h5>
                                                     {{-- <p class="card-text">This is a wider card with supporting text below as a natural
                                                     lead-in to additional content. This content is a little bit longer.</p> --}}
                                                     <p class="card-text"><small class="text-muted">
                                                             @php
-                                                                $sbsLast = App\Models\SBS::where('entry_id', $entryLast->id)
+                                                                $sbsLast = App\Models\SBS::where(
+                                                                    'entry_id',
+                                                                    $entryLast->id,
+                                                                )
                                                                     ->where('tanaman_id', $value->id)
                                                                     ->first();
                                                             @endphp
                                                             Status Entry :
                                                             @if ($entryNow != null)
                                                                 @php
-                                                                    $sbs = App\Models\SBS::where('entry_id', $entryNow->id)
+                                                                    $sbs = App\Models\SBS::where(
+                                                                        'entry_id',
+                                                                        $entryNow->id,
+                                                                    )
                                                                         ->where('tanaman_id', $value->id)
                                                                         ->first();
 
@@ -329,7 +337,7 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <form method="post"action="{{ url('/entry') }}">
+                <form method="post"action="{{ url('/sbsentry') }}">
                     @csrf
                     <div class="modal-body">
                         <table id="example1" class="table table-bordered table-striped ">
@@ -375,7 +383,7 @@
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    <form method="post" action="{{ url('/entry/' . $value->id) }}">
+                    <form method="post" action="{{ url('/sbsentry/' . $value->id) }}">
                         @method('delete')
                         @csrf
                         <div class="modal-body">

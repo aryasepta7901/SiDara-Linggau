@@ -48,7 +48,7 @@ class ValidasiSBSController extends Controller
                 $tahunNow = date('Y');
             }
         }
-        return view('sbs.validasi.bps.index', [
+    return view('sbs.validasi.bps.index', [
             'title' => 'Dashboard SBS ' . Carbon::parse($bulanTahun)->isoFormat('MMMM YYYY', 'id'),
             'kecamatan' => Kecamatan::whereNotIn('id', [1674])->get(),
             'bulanNow' => $bulanNow,
@@ -142,7 +142,7 @@ class ValidasiSBSController extends Controller
                     SBS::create($data);
                 }
             }
-            return redirect('validasi/bps')->with('success', 'Validasi Berhasil di Lakukan');
+            return redirect('sbsvalidasi/bps')->with('success', 'Validasi Berhasil di Lakukan');
         }
 
         // Tambah
@@ -203,7 +203,7 @@ class ValidasiSBSController extends Controller
             ];
             SBS::create($data);
         }
-        return redirect('validasi/bps/' . $request->entry_id)->with('success', 'Tanaman Berhasil ditambahkan');
+        return redirect('sbsvalidasi/bps/' . $request->entry_id)->with('success', 'Tanaman Berhasil ditambahkan');
     }
 
     /**
@@ -228,7 +228,7 @@ class ValidasiSBSController extends Controller
             'kecamatan' => $entrySBS->kec_id,
             'entryNow' => EntrySBS::where('kec_id', $entrySBS->kec_id)->where('bulan', $entrySBS->bulan)->where('tahun', $entrySBS->tahun)->first(),
             'tanaman' => Tanaman::where('jenis_sph', 'SBS')->orderBy('urut_kues', 'asc')->get(),
-            'allTanaman' => Tanaman::whereNotIn('id', $data)->get(),
+            'allTanaman' => Tanaman::whereNotIn('id', $data)->where('jenis_sph', 'SBS')->get(),
 
         ]);
     }

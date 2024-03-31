@@ -140,7 +140,7 @@ class ValidasiSBSDinasController extends Controller
             }
         }
 
-        return redirect('validasi/dinas')->with('success', 'Validasi Berhasil di Lakukan');
+        return redirect('sbsvalidasi/dinas')->with('success', 'Validasi Berhasil di Lakukan');
     }
 
     /**

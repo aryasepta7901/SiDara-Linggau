@@ -31,11 +31,11 @@ class LoginController extends Controller
                 if ($findUser->kec_id == null) {
                     return redirect('/login')->with('success', 'Akun Telah terdaftar, Harap Hubungi Admin untuk pembagian wilayah tugas');
                 }
-                $url = '/entry';
+                $url = '/dashboard';
             } elseif ($findUser->role == 'AD') {
-                $url = '/validasi/dinas';
+                $url = '/dashboard';
             } elseif ($findUser->role == 'PML') {
-                $url = '/validasi/bps';
+                $url = '/dashboard';
             }
             // if ($findUser && Hash::check($request->password, $findUser->password)) {
             $request->session()->regenerate();

@@ -266,6 +266,36 @@
             }
         });
     </script>
+    <script>
+        $(document).ready(function() {
+            // Mendapatkan nilai awal dari input #r4
+            var initialValue = $('#r3').val();
+
+            // Fungsi ini dijalankan saat nilai input berubah
+            $('#r3').on('input', function() {
+                // Mendapatkan nilai dari input
+                var inputValue = $(this).val();
+                // Membuat teks dengan tag <p> dan mengisi dengan nilai input
+                var resultText = '<p> Note: Total nilai R4, R5 dan R6 harus lebih kecil/sama dengan ' +
+                    inputValue +
+                    ' </p>';
+                // Menetapkan teks pada elemen dengan id 'result'
+                $('#result2').html(resultText);
+                // Menetapkan nilai pada input readonly
+            });
+            // Memastikan nilai awal diambil saat dokumen siap
+            // dan mengisi elemen dengan id 'result' dengan nilai awal
+            if (initialValue !== '') {
+                var resultText = '<p> Note: Total nilai R4, R5 dan R6 harus lebih kecil/ sama dengan ' +
+                    initialValue + ' </p>';
+                $('#result2').html(resultText);
+                $('#r5Input').val(initialValue);
+            } else {
+                $('#result2').html('');
+            }
+        });
+    </script>
+
 
     {{-- <script>
         function showHideInput1() {

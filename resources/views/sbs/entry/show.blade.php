@@ -25,7 +25,7 @@
     <div class="col-lg-12">
         <div class="card">
             <div class="card-header d-flex justify-content-between">
-                <a type="button" href="{{ url('/entry') }}" class="btn btn-default" data-dismiss="modal">Kembali</a>
+                <a type="button" href="{{ url('/sbsentry') }}" class="btn btn-default" data-dismiss="modal">Kembali</a>
             </div>
             <div class="card-body">
 
@@ -79,7 +79,11 @@
                                 @endphp
                                 <tr>
                                     <td class="sticky-col">{{ $loop->iteration }}</td>
-                                    <td class="sticky-col">{{ $value->nama_tanaman }}</td>
+                                    <td class="sticky-col">{{ $value->nama_tanaman }}
+                                        @if ($value->satuan_luas == 'M2')
+                                            (*)
+                                        @endif
+                                    </td>
                                     <td>{{ $value->bentuk_produksi }}</td>
                                     @if ($sbs !== null)
                                         <td class="text-center">{{ $sbs->r4 }}</td>
@@ -114,6 +118,10 @@
 
             </div>
             <!-- /.card-body -->
+            <div class="card-footer">
+                Catatan: (*) Data luasan jamur diisi dengan satuan m2 (bilangan bulat), produksi dalam satuan
+                kuintal (bilangan desimal dengan 2 angka di belakang koma)
+            </div>
         </div>
         <!-- /.card -->
 

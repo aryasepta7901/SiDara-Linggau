@@ -26,8 +26,10 @@
 
         <div class="card">
             <div class="card-header d-flex justify-content-end">
+                <a type="button" href="{{ url('/sbsvalidasi/bps') }}" class="btn btn-default" data-dismiss="modal">Kembali</a>
+
                 @if ($entryNow->status == 6)
-                    <button class="btn btn-primary ml-2" data-toggle="modal" data-target="#tambah"><i class="fa fa-plus">
+                    <button class="btn btn-primary ml-auto" data-toggle="modal" data-target="#tambah"><i class="fa fa-plus">
                         </i> </button>
                 @endif
 
@@ -102,7 +104,7 @@
                 </table> --}}
             </div>
             <div class="card-body ">
-                <form method="post" action="{{ url('/validasi/bps') }}">
+                <form method="post" action="{{ url('/sbsvalidasi/bps') }}">
                     @csrf
                     @if ($entryNow->status == 4 || $entryNow->status == 6)
                         <button type="submit" name="kirimValidasi" value="kirimValidasi"
@@ -164,7 +166,11 @@
                                     @endphp
                                     <tr>
                                         <td class="sticky-col">{{ $loop->iteration }}</td>
-                                        <td class="sticky-col">{{ $value->nama_tanaman }}</td>
+                                        <td class="sticky-col">{{ $value->nama_tanaman }}
+                                            @if ($value->satuan_luas == 'M2')
+                                                (*)
+                                            @endif
+                                        </td>
                                         <td>{{ $value->bentuk_produksi }}</td>
                                         @if ($sbs !== null)
                                             <td class="text-center">{{ $sbs->r4 }}</td>
@@ -258,8 +264,13 @@
                                 <!-- Tambahkan baris-baris data lainnya sesuai kebutuhan -->
                             </tbody>
                         </table>
+
                     </div>
                 </form>
+            </div>
+            <div class="card-footer">
+                Catatan: (*) Data luasan jamur diisi dengan satuan m2 (bilangan bulat), produksi dalam satuan
+                kuintal (bilangan desimal dengan 2 angka di belakang koma)
             </div>
             <!-- /.card-body -->
         </div>
@@ -278,7 +289,7 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <form method="post"action="{{ url('/validasi/bps') }}">
+                <form method="post"action="{{ url('/sbsvalidasi/bps') }}">
                     @csrf
                     <div class="modal-body">
                         <table id="example1" class="table table-bordered table-striped ">
@@ -328,7 +339,7 @@
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    <form method="post" action="{{ url('/validasi/bps/' . $value->id) }}">
+                    <form method="post" action="{{ url('/sbsvalidasi/bps/' . $value->id) }}">
                         @method('delete')
                         @csrf
                         <div class="modal-body">

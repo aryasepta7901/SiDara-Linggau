@@ -195,6 +195,9 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
+        // New providers
+        App\Providers\getTrimester::class,
+
     ],
 
     /*

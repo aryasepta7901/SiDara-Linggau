@@ -3,7 +3,7 @@
 @section('content')
     <div class="col-lg-12">
         <div class="card">
-            <form method="post" action="{{ url('/entry/storeMonthYearSelection') }}">
+            <form method="post" action="{{ url('/sbsentry/storeMonthYearSelection') }}">
                 <div class="card-body">
                     @csrf
 
@@ -84,7 +84,7 @@
                                         <td class="text-center">
                                             <button class="btn btn-success btn-sm"><i class="fas fa-check"></i>
                                             </button>
-                                            <a type="button" href="{{ url('/validasi/dinas/' . $entryNow->id) }}"
+                                            <a type="button" href="{{ url('/sbsvalidasi/dinas/' . $entryNow->id) }}"
                                                 class="btn btn-primary btn-sm"><i class="fas fa-pen"></i>
                                             </a>
                                         </td>
@@ -95,7 +95,7 @@
                                         <td class="text-center">
                                             <button class="btn btn-success btn-sm">Dinas Setuju</i>
                                             </button>
-                                            <a type="button" href="{{ url('/validasi/dinas/' . $entryNow->id) }}"
+                                            <a type="button" href="{{ url('/sbsvalidasi/dinas/' . $entryNow->id) }}"
                                                 class="btn btn-primary btn-sm"><i class="fas fa-eye"></i>
                                             </a>
                                         </td>
@@ -106,7 +106,7 @@
                                         <td class="text-center">
                                             <button class="btn btn-success btn-sm">BPS Setuju</i>
                                             </button>
-                                            <a type="button" href="{{ url('/validasi/dinas/' . $entryNow->id) }}"
+                                            <a type="button" href="{{ url('/sbsvalidasi/dinas/' . $entryNow->id) }}"
                                                 class="btn btn-primary btn-sm"><i class="fas fa-eye"></i>
                                             </a>
                                         </td>

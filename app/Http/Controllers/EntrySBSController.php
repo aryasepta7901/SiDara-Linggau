@@ -68,8 +68,8 @@ class EntrySBSController extends Controller
         return view('sbs.entry.index', [
             'title' => 'Entry SBS Bulan ' . Carbon::parse($bulanTahun)->isoFormat('MMMM YYYY', 'id'),
             'kecamatan' => Kecamatan::where('id', auth()->user()->kec_id)->first(),
-            'tanaman' => Tanaman::whereIn('id', $data)->get(),
-            'allTanaman' => Tanaman::whereNotIn('id', $data)->get(),
+            'tanaman' => Tanaman::whereIn('id', $data)->orderBy('urut_kues', 'asc')->get(),
+            'allTanaman' => Tanaman::whereNotIn('id', $data)->where('jenis_sph', 'SBS')->get(),
             'entryLast' => $entryLast,
             'entryNow' => $entryNow,
             'bulanNow' => $bulanNow,
@@ -114,9 +114,9 @@ class EntrySBSController extends Controller
         if ($request->submit1) {
             $request->validate(
                 [
-                    'r4' => 'required|gt:0',
+                    'r4' => 'required|max:4|gt:0',
                     'r5'  => 'required|lte:r4',
-                    'r6'  => 'required|lte:r4',
+                    'r6'  => 'lte:r4',
                     'r7'  => 'required|lte:r4',
                     'r8' => 'required|max:4',
 
@@ -180,7 +180,7 @@ class EntrySBSController extends Controller
                         'user_id' => $request->user_id,
                     ]
                 );
-                return redirect('/entry/pertProd/' . $request->tanaman_id);
+                return redirect('/sbsentry/pertProd/' . $request->tanaman_id);
             } else {
                 // Gunakan session untuk menyimpan pesan kesalahan
                 $tanaman = Tanaman::where('id', $request->tanaman_id)->first();
@@ -266,7 +266,7 @@ class EntrySBSController extends Controller
                     'status' => 1,
                 ]
             );
-            return redirect('/entry')->with('success', 'Tanaman Berhasil dilakukan Entry');
+            return redirect('/sbsentry')->with('success', 'Tanaman Berhasil dilakukan Entry');
         }
 
         // Tanaman Baru
@@ -329,7 +329,7 @@ class EntrySBSController extends Controller
                     'note' => $request->note,
                 ]
             );
-            return redirect('/entry')->with('success', 'Tanaman Berhasil dilakukan Entry');
+            return redirect('/sbsentry')->with('success', 'Tanaman Berhasil dilakukan Entry');
         }
 
         if ($request->Btntanaman_id) {
@@ -384,7 +384,7 @@ class EntrySBSController extends Controller
                 $entry->update(['status_tanaman' => 2]);
             }
 
-            return redirect('/entry')->with('success', 'Berhasil Menambahkan Komoditas Baru, Silahkan Lakukan Entry Pada Komoditas Tersebut');
+            return redirect('/sbsentry')->with('success', 'Berhasil Menambahkan Komoditas Baru, Silahkan Lakukan Entry Pada Komoditas Tersebut');
         }
         if ($request->sendKues) {
             //$bulan = sprintf("%02d", $request->bulan);
@@ -405,7 +405,7 @@ class EntrySBSController extends Controller
             }
 
 
-            return redirect('/entry')->with('success', 'Kuesioner Berhasil di Kirim');
+            return redirect('/sbsentry')->with('success', 'Kuesioner Berhasil di Kirim');
         }
     }
 
@@ -435,9 +435,9 @@ class EntrySBSController extends Controller
     public function reset(Request $request)
     {
         SBS::where('tanaman_id', $request->tanaman_id)->where('entry_id', $request->entry_id)->delete();
-        return redirect('/entry/pertLuas/' . $request->tanaman_id);
+        return redirect('/sbsentry/pertLuas/' . $request->tanaman_id);
     }
-    public function pertLuas(Tanaman $entry)
+    public function pertLuas(Tanaman $sbsentry)
     {
         $this->authorize('pcl');
 
@@ -475,18 +475,18 @@ class EntrySBSController extends Controller
         } else {
             $id = $entryNow->id;
         }
-        $sbsNow = SBS::where('tanaman_id', $entry->id)->where('entry_id', $id)->first();
+        $sbsNow = SBS::where('tanaman_id', $sbsentry->id)->where('entry_id', $id)->first();
         return view('sbs.entry.show1', [
-            'title' => 'Tanaman ' . $entry->nama_tanaman,
-            'sbsLast' => SBS::where('tanaman_id', $entry->id)->where('entry_id', $entryLast->id)->first(),
+            'title' => 'Tanaman ' . $sbsentry->nama_tanaman,
+            'sbsLast' => SBS::where('tanaman_id', $sbsentry->id)->where('entry_id', $entryLast->id)->first(),
             'sbsNow' => $sbsNow,
             'entryNow' => $entryNow,
-            'tanaman' => Tanaman::where('id', $entry->id)->first(),
+            'tanaman' => Tanaman::where('id', $sbsentry->id)->first(),
             'bulanNow' => $bulanNow,
 
         ]);
     }
-    public function pertProd(Tanaman $entry)
+    public function pertProd(Tanaman $sbsentry)
     {  // Mengambil bulan dan tahun dari sesi
         $this->authorize('pcl');
 
@@ -510,9 +510,9 @@ class EntrySBSController extends Controller
         $entryNow_id = EntrySBS::where('kec_id', auth()->user()->kec_id)->where('bulan', $bulanNow)->where('tahun', $tahunNow)->first()->id;
 
         return view('sbs.entry.show2', [
-            'title' => 'Tanaman ' . $entry->nama_tanaman,
-            'sbsNow' => SBS::where('tanaman_id', $entry->id)->where('entry_id', $entryNow_id)->first(),
-            'tanaman' => Tanaman::where('id', $entry->id)->first(),
+            'title' => 'Tanaman ' . $sbsentry->nama_tanaman,
+            'sbsNow' => SBS::where('tanaman_id', $sbsentry->id)->where('entry_id', $entryNow_id)->first(),
+            'tanaman' => Tanaman::where('id', $sbsentry->id)->first(),
         ]);
     }
 
@@ -545,12 +545,12 @@ class EntrySBSController extends Controller
      * @param  \App\Models\Tanaman  $EntrySBS
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $request, Tanaman $entry)
+    public function destroy(Request $request, Tanaman $sbsentry)
     {
         $entryLast = EntrySBS::where('kec_id', auth()->user()->kec_id)->where('bulan', $request->bulanLalu)->where('tahun', $request->tahunLalu)->first();
         $entryNow = EntrySBS::where('kec_id', auth()->user()->kec_id)->where('bulan', $request->bulanNow)->where('tahun', $request->tahunNow)->first();
 
-        $sbsLast = SBS::where('tanaman_id', $entry->id)->where('entry_id', $entryLast->id)->first();
+        $sbsLast = SBS::where('tanaman_id', $sbsentry->id)->where('entry_id', $entryLast->id)->first();
         if ($sbsLast->r4 == 0) {
             //    Hapus Jika 0
             $sbsLast->delete();
@@ -558,7 +558,7 @@ class EntrySBSController extends Controller
             $sbsLast->update(['status_tanaman' => 1]);
         }
         if ($entryNow != null) {
-            SBS::where('tanaman_id', $entry->id)->where('entry_id', $entryNow->id)->delete();
+            SBS::where('tanaman_id', $sbsentry->id)->where('entry_id', $entryNow->id)->delete();
         }
         // Kontrak::destroy($kontrak->id);
         return redirect()->back()->with('success', 'Data Tanaman Berhasil di Hapus');
