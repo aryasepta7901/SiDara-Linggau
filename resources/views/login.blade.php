@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>SI-Dara| Log in</title>
+    <title>SIDARA | Log in</title>
 
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet"
@@ -22,7 +22,7 @@
         <!-- /.login-logo -->
         <div class="card card-outline card-success">
             <div class="card-header text-center">
-                <a href="{{ url('/') }}" class="h1"><b>SI-Dara</b> Linggau</a>
+                <a href="{{ url('/') }}" class="h1"><b>SIDARA</b> Linggau</a>
             </div>
             <div class="card-body">
                 @if ($errors->any())

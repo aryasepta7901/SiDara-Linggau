@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-    <title>SI-Dara</title>
+    <title>SIDARA</title>
     <meta content="" name="description">
     <meta content="" name="keywords">
 
@@ -45,13 +45,12 @@
         <div class="container-fluid container-xl d-flex align-items-center justify-content-between">
 
             <a href="" class="logo d-flex align-items-center">
-                <img src="{{ asset('landingPage') }}/img/bps.png" alt="">
-                <span>SI-Dara</span>
+                <img src="{{ asset('landingPage') }}/img/bps-logo.png" alt="">
+                <span>SIDARA</span>
             </a>
 
             <nav id="navbar" class="navbar">
                 <ul>
-
                     <li><a class="getstarted scrollto" href="login">Login</a></li>
                 </ul>
                 <i class="bi bi-list mobile-nav-toggle"></i>
@@ -65,8 +64,8 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-6 d-flex flex-column justify-content-center">
-                    <h1 data-aos="fade-up">SI-Dara</h1>
-                    <h2 data-aos="fade-up" data-aos-delay="400">Sistem Informasi Data Holtikultura <br> BPS Kota Lubuk
+                    <h1 data-aos="fade-up">SIDARA</h1>
+                    <h2 data-aos="fade-up" data-aos-delay="400">Sistem Informasi Data Hortikultura <br> BPS Kota Lubuk
                         Linggau
                     </h2>
                     <div data-aos="fade-up" data-aos-delay="600">

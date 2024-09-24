@@ -110,7 +110,7 @@ class EntryTBFController extends Controller
         if ($request->submit1) {
             $request->validate(
                 [
-                    'r3' => 'required|max:6|gt:0',
+                    'r3' => 'required|max:6',
                     'r4'  => 'required|lte:r3',
                     'r5'  => 'required|lte:r3',
                     'r6'  => 'required|lte:r3',
@@ -120,7 +120,6 @@ class EntryTBFController extends Controller
                 [
                     'required' => ':attribute Wajib di Isi',
                     'lte' => ' :attribute Harus lebih kecil atau sama dengan  dari :value.',
-                    'gt' => ' :attribute tidak boleh :value.',
                     'max' => ':attribute Maksimal :max Karakter'
                 ]
             );

@@ -114,11 +114,11 @@ class EntrySBSController extends Controller
         if ($request->submit1) {
             $request->validate(
                 [
-                    'r4' => 'required|max:4|gt:0',
+                    'r4' => 'required|max:6|gt:0',
                     'r5'  => 'required|lte:r4',
                     'r6'  => 'lte:r4',
                     'r7'  => 'required|lte:r4',
-                    'r8' => 'required|max:4',
+                    'r8' => 'required|max:6',
 
                 ],
                 [
