@@ -109,13 +109,14 @@ class EntryBSTController extends Controller
             if ($request->r6 != 0) {
                 $request->validate(
                     [
-                        'r7' => 'required|lte:r6',
+                        'r7' => 'required|lte:r6|min:' . $request->r5,
                         'r8' => 'required|lte:r6',
                         'r9' => 'required|lte:r6',
                     ],
                     [
                         'required' => ':attribute Wajib di Isi',
                         'lte' => ' :attribute Harus lebih kecil atau sama dengan  dari :value.',
+                        'min' => ':attribute harus lebih besar atau sama dengan  dari :min.',
                     ]
                 );
             } else {
