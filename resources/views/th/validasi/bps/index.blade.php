@@ -65,6 +65,8 @@
                             <th>No</th>
                             <th>Kecamatan</th>
                             <th>Status</th>
+                            <th>Created_at</th>
+                            <th>Updated_at</th>
                         </tr>
 
                     </thead>
@@ -118,6 +120,17 @@
                                     <td class="text-center"><button class="btn btn-danger btn-sm"><i
                                                 class="fas fa-times"></i></button></td>
                                 @endif
+                                <td class="text-center">
+                                    @if ($entryNow !== null && $entryNow->created_at !== null)
+                                        {{ $entryNow->created_at->translatedFormat('d F Y, H:i') }}
+                                    @endif
+                                </td>
+
+                                <td class="text-center">
+                                    @if ($entryNow !== null && $entryNow->created_at !== null)
+                                        {{ $entryNow->updated_at->translatedFormat('d F Y, H:i') }}
+                                    @endif
+                                </td>
                             </tr>
                         @endforeach
 
